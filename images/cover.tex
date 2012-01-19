@@ -1,5 +1,5 @@
-\documentclass[12pt]{article}
-\usepackage[paperheight=10.13in,paperwidth=7.16in,margin=0in]{geometry}
+\documentclass[b5paper,12pt]{article}
+\usepackage[margin=0in]{geometry}
 
 \usepackage[cm-default]{fontspec}
 %% \usepackage{xunicode}
@@ -28,32 +28,28 @@
 \thispagestyle{empty}
 
 \noindent
-\begin{pspicture}(7.16in,10.13in)
+\begin{pspicture}(\linewidth,\pdfpageheight)
   \psgrid
 
-  %\rput[b](3,2.5)
-  %  {\includegraphics[scale=2.2]{arrow}}
-  
-  \psline[linewidth=0.1in,linecolor=main](0,10.08in)(\linewidth,10.08in)
+  \psline[linewidth=3mm,linecolor=main](0,0.99\pdfpageheight)(\linewidth,0.99\pdfpageheight)
 
-  \rput(0.5\linewidth,25){\textsf{\textbf{\fontsize{14pt}{14pt}\selectfont Node.js Taiwan 社群強力推薦}}}
+  \rput(0.5\linewidth,0.96\pdfpageheight){\textsf{\textbf{\fontsize{14pt}{14pt}\selectfont Node.js Taiwan 社群強力推薦}}}
 
-  \rput(\linewidth,10.13in)
+  \rput(\linewidth,\pdfpageheight)
     {\pspolygon*(-3.6,0)(-1.4,0)(0,-1.4)(0,-3.6)}
-  \rput(\linewidth,10.13in)
+  \rput(\linewidth,\pdfpageheight)
     {\rput{-45}(-1,-1){\Large\textbf{\white 實戰}}}
-  \rput(\linewidth,10.13in)
+  \rput(\linewidth,\pdfpageheight)
     {\rput{-45}(-1.5,-1.5){\Large\textbf{\white 程式設計}}}
-
   
   \psframe[linecolor=main,fillcolor=main,fillstyle=solid](0,13.5)(\linewidth,17.5)
   \psline[linewidth=0.3in,linecolor=main](0,12.7)(\linewidth,12.7)
   \rput[l](1.5,17.5){\textsl{\fontsize{36pt}{36pt}\selectfont The}}
   \rput[l](3.6,15.4){\fontsize{96pt}{96pt}\selectfont Node.js}
   \rput[l](3.5,15.5){\fontsize{96pt}{96pt}\selectfont\white Node.js}
-  \rput[l](12.5,13.6){\textsl{\fontsize{36pt}{36pt}\selectfont Little Book}}
+  \rput[l](12,13.6){\textsl{\fontsize{36pt}{36pt}\selectfont Little Book}}
   
-  \rput[l](13.5,11){\textsf{\textbf{\fontsize{36pt}{36pt}\selectfont 中文版}}}
+  \rput[l](0.75\linewidth,11){\textsf{\textbf{\fontsize{36pt}{36pt}\selectfont 中文版}}}
  
   \rput[b](0.75\linewidth,19)
     {\includegraphics[scale=1]{nodejs}}
@@ -61,17 +57,18 @@
   \rput[b](0.18\linewidth,6.5)
     {\includegraphics[scale=2.5]{professional}}
  
-  \rput[l](0.5\linewidth,6){\textsf{\textbf{\fontsize{14pt}{14pt}\selectfont 由開發社群的熱血程式設計師與您分享}}}
-  \rput[l](0.5\linewidth,5){\textsf{\textbf{\fontsize{14pt}{14pt}\selectfont 最棒的 Node.js 學習經驗}}}
- 
-  \rput[b](0.75\linewidth,19)
+  \rput[rb](0.95\linewidth,5){
+    \minipage{\linewidth}\raggedleft\huge{\textsf{\textbf{\fontsize{14pt}{28pt}\selectfont
+    適用最新版 Node.js 0.6.7\\
+    本書由 Node.js Taiwan 社群程式設計師編寫\\
+    最快樂的 Node.js 入門學習指南
+    }}}\endminipage}
 
   \rput[b](3.6,1)
     {\includegraphics[scale=0.4]{tree}}
   \rput[b](3.4,0.3){\textsf{\textbf{\fontsize{28pt}{28pt}\selectfont ContPub Press}}}
 
-  
-  \rput[b](15.5,0.2){\textsl{\fontsize{22pt}{22pt}\selectfont Node.js Taiwan}}
+  \rput[b](0.85\linewidth,0.2){\textsl{\fontsize{22pt}{22pt}\selectfont Node.js Taiwan}}
 
 \end{pspicture}
 

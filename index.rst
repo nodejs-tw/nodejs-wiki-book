@@ -5,8 +5,10 @@
    @epub_theme: epub_simple
    @mobi_theme: mobi_simple
    @basename: the-little-nodejs-book-zh-tw
-   @latex_paper_size: letter
+   @latex_paper_size: b5
    @latex_font_size: 11pt
+   @pdf_cover: images/cover.pdf
+   @epub_cover: _static/cover.png
 
 #######################
 The Little Node.js Book
