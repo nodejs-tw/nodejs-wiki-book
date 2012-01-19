@@ -1,14 +1,14 @@
 .. Settings
    @title: The Little Node.js Book
    @authors: clonn, lyhcode
-   @latex_logo: images/nodejs.eps
-   @epub_theme: epub_simple
-   @mobi_theme: mobi_simple
    @basename: the-little-nodejs-book-zh-tw
    @latex_paper_size: b5
    @latex_font_size: 11pt
+   @latex_logo: images/nodejs.eps
    @pdf_cover: images/cover.pdf
    @epub_cover: _static/cover.png
+   @epub_theme: epub_simple
+   @mobi_theme: mobi_simple
 
 #######################
 The Little Node.js Book
