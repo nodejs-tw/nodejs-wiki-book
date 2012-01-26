@@ -18,4 +18,5 @@ The Little Node.js Book
    :maxdepth: 3
 
    readme
+   zh-tw/node_preface
    zh-tw/outline
