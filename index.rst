@@ -21,4 +21,5 @@ The Little Node.js Book
    zh-tw/node_preface
    zh-tw/outline
    zh-tw/node_introduce
-   zh-tw/node_js_preface
+   zh-tw/node_javascript
+   zh-tw/node_install
