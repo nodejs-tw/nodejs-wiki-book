@@ -1,0 +1,3 @@
+Javascript 與nodeJS
+
+其實使用Javascript在網頁端與伺服器端的差距並不大，但是為了使NodeJS可以發揮他最強大的能力，有一些知識還是必要的，所以還是針對這些主題介紹一下。其中event loop、scope以及callback其實是比較需要了解的基本知識，cps、currying、flow control是更進階的技巧與應用。
