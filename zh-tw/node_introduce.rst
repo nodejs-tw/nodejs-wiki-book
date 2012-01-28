@@ -29,3 +29,6 @@ NodeJS 符合 CommonJS 的規範，使得 Callback 方式易於實現，也能�
 NodeJS對於資源的調校有所不同，當程式接收到一筆連線(connection)，會通知作業系統透過epoll, kqueue, /dev/poll,或select將連線保留，並且放入heap中配置，先讓連線進入休眠(Sleep)狀態，當系統通知時才會觸發連線的callback。這種處理連線方式只會佔用掉記憶體，並不會使用到CPU資源。另外因為採用Javascript 語言的特性，每個request都會有一個callback，如此可以避免發生Block的狀況發生。
 
 基於Callback特性，目前NodeJS大多應用於Comet(long pulling) Request Server，或者是高連線數量的網路服務上，目前也有許多公司將NodeJS設為內部核心網路服務之一。在NodeJS也提供了外掛管理(Node package management)，讓愛好NodeJS輕易開發更多有趣的服務、外掛，並且提供到npm讓全世界使用者快速安裝使用。
+
+本書最後執行測試版本為node.js v0.6.8，相關API 文件可查詢`http://nodejs.org <http://nodejs.org>`
+本書所有範例均可於linux, windows 上執行，如遇到任何問題歡迎至`http://nodejs.tw <http://node.js.tw>`，詢問對於node.js 相關問題。
