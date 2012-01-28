@@ -23,3 +23,5 @@ The Little Node.js Book
    zh-tw/node_introduce
    zh-tw/node_javascript
    zh-tw/node_install
+   zh-tw/node_basic
+   zh-tw/node_npm
