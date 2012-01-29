@@ -18,7 +18,7 @@ node.js http 伺服器建立
  * ip: 機器本身的ip 位置，因為使用本地端，因此設定為127.0.0.1
  * port: 需要開通的阜號，通常設定為http port 80，因範例不希望與基本port 相衝，隨意設定為1337
 
-在node.js 的程式中，有許多預設的模組可以使用，因此需要使用require 方法將模組引入，在這邊我們需要使用http這個模組，因此將http載入。Http 模組裡面內建有許多方法可以使用，這邊採用createServer 創建一個基本的http server，裡面的回呼函式(call back function)可以載入http 伺服器的資料與回應方法(request, response)。在程式裡面就可以看到我們直接回應給瀏覽器端所需的 Header，回應內容。
+在node.js 的程式中，有許多預設的模組可以使用，因此需要使用require 方法將模組引入，在這邊我們需要使用http這個模組，因此將http載入。Http 模組裡面內建有許多方法可以使用，這邊採用createServer 創建一個基本的http 伺服器，再將http 伺服器給予一個server 變數。裡面的回呼函式(call back function)可以載入http 伺服器的資料與回應方法(request, response)。在程式裡面就可以看到我們直接回應給瀏覽器端所需的 Header，回應內容。
 
 .. code-block:: javascript
 res.writeHead(200, {'Content-Type': 'text/plain'});
@@ -33,4 +33,9 @@ http.listen(port, ip);
 
 .. code-block:: javascript
 console.log("Server running at http://" + ip + ":" + port);
+
+node.js http 路徑建立 
+=====================
+
+:tab
 
