@@ -5,7 +5,7 @@
    @latex_paper_size: b5
    @latex_font_size: 11pt
    @latex_logo: images/nodejs.eps
-   @pdf_cover: images/cover.pdf
+   @pdf_cover: cover.tex
    @epub_cover: _static/cover.png
    @epub_theme: epub_simple
    @mobi_theme: mobi_simple
