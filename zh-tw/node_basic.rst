@@ -54,7 +54,7 @@ node.js http 路徑建立
 
 重新啟動node.js 程式後，在瀏覽器端測試一下路徑行為，結果如下圖，當在瀏覽器輸入http://127.0.0.1:1337/test ，在伺服器端會收到兩個要求，一個是我們輸入的/test 要求，另外一個則是 /favicon.ico。
 
-.. image:: ../images/zh-tw/node_basic_rout_test.jpg
+.. image:: ../images/zh-tw/node_basic_rout_test.png
    :scale: 100%
    :align: center
 
