@@ -37,5 +37,21 @@ console.log("Server running at http://" + ip + ":" + port);
 node.js http 路徑建立 
 =====================
 
-:tab
+前面已經介紹如何建立一個簡單的http 伺服器，接著需要處理一些伺服器要求(request)處理，在http的協定下，所有從瀏覽器發出的要求都需要經過處理，在路徑上的建立也是如此。這個章節將會解說如何處理路徑問題(routing issue)。
 
+路徑就是指伺服器 ip 位置，或者是網域名稱之後，對於伺服器給予的要求。修改剛才的hello world 檔案，修改如下。
+
+.. code-block:: javascript
+server = http.createServer(function (req, res) {
+  console.log(req.url);
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('hello world\n');
+});
+
+重新啟動node.js 程式後，在瀏覽器端測試一下路徑行為，結果如下圖，當在瀏覽器輸入http://127.0.0.1:1337/test ，在伺服器端會收到兩個要求，一個是我們輸入的/test 要求，另外一個則是 /favicon.ico。
+
+.. image:: ../images/zh-tw/node_basic_rout_test.jpg
+   :scale: 100%
+   :align: center
+
+最後面這段/test 的要求，http 伺服器本身需要經過程式設定才有辦法回應給瀏覽器端所需要的回應。
