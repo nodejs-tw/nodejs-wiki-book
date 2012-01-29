@@ -22,7 +22,8 @@ curl http://npmjs.org/install.sh | sh
 接著輸入指令測試
 
 .. code-block:: javascript
-npm --v
+
+    npm --v
 
 .. image:: ../images/zh-tw/node_npm_linux_test.jpg
    :scale: 100%
@@ -39,7 +40,8 @@ npm 指令測試
 windows 就必須進入command line，linux 需要進入到terminal 模式底下，輸入指令如下，
 
 .. code-block:: javascript
-npm --v
+
+    npm --v
 
 結果如下圖所示,
 
