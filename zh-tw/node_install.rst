@@ -17,18 +17,19 @@ Linux 很適合作為 NodeJS 的伺服器作業系統及開發環境。安裝前
 安裝指令如下，如設有權限問題，請在指令前面加上sudo 
 
 .. code-block:: javascript
-git clone https://github.com/joyent/node.git
-cd node
-git checkout v0.6.7
-./configure
-make
-sudo make install
 
+    git clone https://github.com/joyent/node.git
+    cd node
+    git checkout v0.6.7
+    ./configure
+    make
+    sudo make install 
 
 接著測試nodeJS 是否正常執行
 
 .. code-block:: javascript
-node --version
+
+    node --version
 
 出現版本訊息即表示安裝成功。
 
