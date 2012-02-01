@@ -58,4 +58,39 @@ node.js http 路徑建立
    :scale: 100%
    :align: center
 
-最後面這段/test 的要求，http 伺服器本身需要經過程式設定才有辦法回應給瀏覽器端所需要的回應。
+最後面這段/test 的要求，http 伺服器本身需要經過程式設定才有辦法回應給瀏覽器端所需要的回應，在伺服器中所有的路徑要求都是需要被解析才有辦法取得資料的。因此在node.js 當中所有的路徑都需要經過設定，未經過設定的路由會讓瀏覽器無法取得任何資料導致錯誤頁面的發生，底下將會解說如何設定路由，同時避免發生錯誤情形。
+
+接下來剛才的檔案需要經過程式判別，這樣才能讓使用者透過瀏覽器，瀏覽不同路徑時。根據剛才的程式做如下的修改，
+
+.. literalinclude:: ../src/node_basic_http_rout_done.js
+   :language: javascript
+
+程式修改後，增加了某些變化，首先載入url 模組，另外增加一個path 變數。url 模組就跟如同他的命名一般，專門處理url 字串處理，裡面提供了許多方法來解決路徑上的問題。因為從瀏覽器發出的要求路徑可能會帶有多個路徑，或者Get 參數組合等，在這邊所需要要的需求就是將路徑單純化，只需要取用路徑的部份即可，例如使用者可能會送出 http://127.0.0.1:1337/test?send=1 ，如果直接信任req.url 就會收到結果為 /test?send=1 ，實際上的需求只要 /test 即可，所以需要使用url 這個模組來幫助處理路徑問題。
+
+在這邊使用url.parse 的方法，裡面帶入網址格式資料，將會回傳路徑資料。為了後需方便使用，將回傳的資料設定到path 變數當中。在回傳的路徑資料，裡面包含了很多資訊，如下表：
+
+.. image:: ../images/zh-tw/node_basic_rout_url.png
+   :scale: 100%
+   :align: center
+
+這邊只需要使用單純的路徑要求，直接取用path.pathname ，就可以達到我們的目的。
+
+最後要做路徑的判別，在不同的路徑可以指定不同的輸出，在範例中有三個可能結果，第一個從瀏覽器輸入/index 就會顯示 index 結果， /test 就會呈現出 test 頁面，最後如果都不符合預期的輸入會直接顯示 default 的頁面，最後的預防可以讓瀏覽器不會出現非預期結果，讓程式的可靠性提昇。
+
+.. image:: ../images/zh-tw/node_basic_rout_url_index.png
+   :scale: 100%
+   :align: center
+
+.. image:: ../images/zh-tw/node_basic_rout_url_test.png
+   :scale: 100%
+   :align: center
+
+.. image:: ../images/zh-tw/node_basic_rout_url_default.png
+   :scale: 100%
+   :align: center
+
+.. image:: ../images/zh-tw/node_basic_rout_url_error.png
+   :scale: 100%
+   :align: center
+
+
