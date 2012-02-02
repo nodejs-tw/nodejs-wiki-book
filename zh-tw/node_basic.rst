@@ -75,23 +75,27 @@ node.js http 路徑建立
 
 這邊只需要使用單純的路徑要求，直接取用path.pathname ，就可以達到我們的目的。
 
-最後要做路徑的判別，在不同的路徑可以指定不同的輸出，在範例中有三個可能結果，第一個從瀏覽器輸入/index 就會顯示 index 結果， /test 就會呈現出 test 頁面，最後如果都不符合預期的輸入會直接顯示 default 的頁面，最後的預防可以讓瀏覽器不會出現非預期結果，讓程式的可靠性提昇。
+最後要做路徑的判別，在不同的路徑可以指定不同的輸出，在範例中有三個可能結果，第一個從瀏覽器輸入/index 就會顯示 index 結果， /test 就會呈現出 test 頁面，最後如果都不符合預期的輸入會直接顯示 default 的頁面，最後的預防可以讓瀏覽器不會出現非預期結果，讓程式的可靠性提昇，底下為測試結果。
 
 .. image:: ../images/zh-tw/node_basic_rout_url_index.png
    :scale: 100%
    :align: center
 
+
 .. image:: ../images/zh-tw/node_basic_rout_url_test.png
    :scale: 100%
    :align: center
+
 
 .. image:: ../images/zh-tw/node_basic_rout_url_default.png
    :scale: 100%
    :align: center
 
+
 .. image:: ../images/zh-tw/node_basic_rout_url_error.png
    :scale: 100%
    :align: center
+
 
 node.js 檔案讀取 
 ================
