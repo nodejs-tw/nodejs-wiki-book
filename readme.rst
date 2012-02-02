@@ -29,7 +29,8 @@ http://creativecommons.org/licenses/by-nc/3.0/legalcode
 關於作者
 ========
 
-* clonn
+* Caesar Chi (clonn)
+* Fillano Feng (fillano)
 * lyhcode
 
 致謝
