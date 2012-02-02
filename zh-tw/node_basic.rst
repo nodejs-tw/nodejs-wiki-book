@@ -93,4 +93,32 @@ node.js http 路徑建立
    :scale: 100%
    :align: center
 
+node.js 檔案讀取 
+================
+
+前面已經介紹如何使用路由（rount）做出不同的回應，實際應用只有在瀏覽器只有輸出幾個文字資料總是不夠的，在本章節中將介紹如何使用檔案讀取，輸出檔案資料，讓使用者在前端瀏覽器也可以讀取到完整的html, css, javascript 檔案輸出。
+
+檔案管理最重要的部分就是`File system <http://nodejs.org/docs/latest/api/fs.html>` 這個模組，此模組可以針對檔案做管理、監控、讀取等行為，裡面有許多預設的方法，底下是檔案輸出的基本範例，底下會有兩個檔案，第一個是靜態html 檔案，另一個為node.js 程式，
+
+.. literalinclude:: ../src/static/index.html
+   :language: html 
+
+.. literalinclude:: ../src/node_basic_file_simple.js
+   :language: javascript
+
+一開始直接載入**file system 模組**，載入名稱為 **fs** 。讀取檔案主要使用的方法為readFile ，裡面以三個參數 **路徑(file path)** , **編碼方式(encoding)** ， **回應函式(callback)** ，路徑必須要設定為靜態html 所在位置，才能指定到正確的檔案。靜態檔案的編碼方式也必須正確，這邊使用靜態檔案的編碼為 **utf8** ，如果編碼設定錯誤，node.js 讀取出來檔案結果會使用 byte raw 格式輸出。
+
+.. image:: ../images/zh-tw/node_basic_file_byte.png
+   :scale: 100%
+   :align: center
+   
+**錯誤編碼格式，導致輸出資料為 byte raw**
+
+**回應函式** 中裡面會使用兩個變數，error 為錯誤資訊，如果讀取的檔案不存在，或者發生錯誤，error 數值會是 true ，如果成功讀取資料 error 將會是 false 。 content 則是檔案內容，資料讀取後將會把資料全數丟到content 這個變數當中。
+
+最後程式的輸出結果畫面如下，
+
+.. image:: ../images/zh-tw/node_basic_file_read.png
+   :scale: 100%
+   :align: center
 
