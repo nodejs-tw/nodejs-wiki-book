@@ -113,10 +113,12 @@ node.js 檔案讀取
 檔案管理最重要的部分就是`File system <http://nodejs.org/docs/latest/api/fs.html>` 這個模組，此模組可以針對檔案做管理、監控、讀取等行為，裡面有許多預設的方法，底下是檔案輸出的基本範例，底下會有兩個檔案，第一個是靜態html 檔案，另一個為node.js 程式，
 
 .. literalinclude:: ../src/static/index.html
-   :language: html 
+   :language: javascript  
+
 
 .. literalinclude:: ../src/node_basic_file_simple.js
    :language: javascript
+
 
 一開始直接載入**file system 模組**，載入名稱為 **fs** 。讀取檔案主要使用的方法為readFile ，裡面以三個參數 **路徑(file path)** , **編碼方式(encoding)** ， **回應函式(callback)** ，路徑必須要設定為靜態html 所在位置，才能指定到正確的檔案。靜態檔案的編碼方式也必須正確，這邊使用靜態檔案的編碼為 **utf8** ，如果編碼設定錯誤，node.js 讀取出來檔案結果會使用 byte raw 格式輸出。
 
