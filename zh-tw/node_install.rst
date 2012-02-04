@@ -7,6 +7,17 @@ Node.JS 安裝與設定
 Linux base
 ==========
 
+
+.. topic:: Ubuntu Linux 使用 apt-get 安裝 Node.js
+
+    ::
+    
+        sudo apt-get install python-software-properties
+        sudo add-apt-repository ppa:chris-lea/node.js-devel
+        sudo apt-get update
+        sudo apt-get nodejs
+
+
 Linux 很適合作為 NodeJS 的伺服器作業系統及開發環境。安裝前，請先確認以下套件已正確安裝。
 
 * curl (wget) 用來下載檔案的工具
