@@ -128,3 +128,66 @@ node.js 檔案讀取
    :scale: 100%
    :align: center
 
+
+node.js http 靜態檔案輸出
+========================
+
+前面已經了解如何讀取本地端檔案，接下來將配合http 伺服器路由，讓每個路由都能夠輸出相對應的靜態 html 檔案。
+首先新增加幾個靜態html 檔案，
+
+.. literalinclude:: ../src/static/index.html
+   :language: javascript  
+
+
+.. literalinclude:: ../src/static/test.html
+   :language: javascript  
+
+
+.. literalinclude:: ../src/static/static.html
+   :language: javascript  
+
+準備一個包含基本路由功能的http 伺服器 
+
+.. code-block:: javascript
+
+    var server,
+        ip   = "127.0.0.1",
+        port = 1337,
+        http = require('http'),
+        url = require('url');
+
+    server = http.createServer(function (req, res) {
+        var path = url.parse(req.url);
+    });
+
+    server.listen(port, ip);
+
+    console.log("Server running at http://" + ip + ":" + port);
+
+加入 **file system** 模組， 使用 **readFile** 的功能，將這一段程式放置於createServer 的回應函式中。
+
+.. code-block:: javascript
+
+    fs.readFile(filePath, encode, function(err, file) {
+    });
+
+readFile 的回應函式裡面加入頁面輸出，讓瀏覽器可以正確讀到檔案，在這邊我們設定讀取的檔案為 html 靜態檔案，所以 Content-type 設定為 **text/html** 。讀取到檔案的內容，將會正確輸出成 html 靜態檔案。
+
+.. code-block:: javascript
+
+    fs.readFile(filePath, encode, function(err, file) {
+      res.writeHead(200, {'Content-Type': 'text/html'});
+      res.write(file);
+      res.end();
+    });
+
+到這邊為止基本的程式內容都已經完成，剩下一些細節的調整。首先路徑上必須做調整，目前的靜態檔案全部都放置於 **static 資料夾** 底下，設定一個變數來記住資料夾位置。
+
+接著將瀏覽器發出要求路徑與資料夾組合，讀取正確html 靜態檔案。使用者有可能會輸入錯誤路徑，所以在讀取檔案的時候要加入錯誤處理，同時回應 **404** 伺服器無法正確回應的 http header 格式。
+
+加入這些細節的修改，一個基本的http 靜態 html 輸出伺服器就完成了，完整程式碼如下，
+
+.. literalinclude:: ../src/node_basic_file_http_static.js
+   :language: javascript
+
+
