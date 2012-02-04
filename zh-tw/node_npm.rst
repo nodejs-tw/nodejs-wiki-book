@@ -174,7 +174,7 @@ npm 是指令列工具（command-line tool），\
 
         1.1.0-2
 
-使用 NPM 管理套件
+使用 NPM 安裝套件
 ================
 
 npm 目前擁有超過 6000 種套件（packages），\
@@ -290,3 +290,124 @@ express 套件提供 ``express`` 這個指令，\
     ::
 
         CoffeeScript version 1.2.0
+
+套件的更新及維護
+==============
+
+除了前一節說明的 search 及 install 用法，\
+npm 還提供其他許多指令（commands）。
+
+使用 ``npm help`` 可以查詢可用的指令。
+
+::
+
+    npm help
+
+.. topic:: 執行結果（部分）
+
+    ::
+
+        where <command> is one of:
+            adduser, apihelp, author, bin, bugs, c, cache, completion,
+            config, deprecate, docs, edit, explore, faq, find, get,
+            help, help-search, home, i, info, init, install, la, link,
+            list, ll, ln, login, ls, outdated, owner, pack, prefix,
+            prune, publish, r, rb, rebuild, remove, restart, rm, root,
+            run-script, s, se, search, set, show, star, start, stop,
+            submodule, tag, test, un, uninstall, unlink, unpublish,
+            unstar, up, update, version, view, whoami
+
+使用 ``npm help command`` 可以查詢指令的詳細用法。例如：
+
+::
+
+    npm help list
+
+接下來，本節要介紹開發過程常用的 npm 指令。
+
+使用 ``list`` 可以列出已安裝套件：
+
+::
+
+    npm list
+
+.. topic:: 執行結果（範例）
+
+    ::
+
+        ├── coffee-script@1.2.0 
+        └─┬ express@2.5.6 
+          ├─┬ connect@1.8.5 
+          │ └── formidable@1.0.8 
+          ├── mime@1.2.4 
+          ├── mkdirp@0.0.7 
+          └── qs@0.4.1 
+
+檢視某個套件的詳細資訊，例如：
+
+::
+
+    npm show express
+
+升級所有套件（如果該套件已發佈更新版本）：
+
+::
+
+    npm update
+
+升級指定的套件：
+
+::
+
+    npm update express
+
+移除指定的套件：
+
+::
+
+    npm uninstall express
+
+使用 package.json
+=================
+
+對於正式的 Node.js 專案，\
+可以建立一個命名為 ``package.json`` 的設定檔（純文字格式），\
+檔案內容參考範例如下：
+
+.. topic:: package.json（範例）
+
+    ::
+
+        {
+            "name": "application-name"
+          , "version": "0.0.1"
+          , "private": true
+          , "dependencies": {
+              "express": "2.5.5"
+            , "coffee-script": "latest"
+            , "mongoose": ">= 2.5.3"
+          }
+        }
+
+其中 ``name`` 與 ``version`` 依照專案的需求設置。
+
+需要注意的是 ``dependencies`` 的設定，\
+它用於指定專案相依的套件名稱及版本：
+
+* ``"express": "2.5.5"``
+  
+  //代表此專案相依版本 2.5.5 的 express 套件
+* ``"coffee-script": "latest"``
+  
+  //使用最新版的 coffee-script 套件（每次更新都會檢查新版）
+* ``"mongoose": ">= 2.5.3"``
+  
+  //使用版本大於 2.5.3 的 mongoose 套件
+
+假設某個套件的新版可能造成專案無法正常運作，\
+就必須指定套件的版本，\
+避免專案的程式碼來不及更新以相容新版套件。\
+通常在開發初期的專案，\
+需要盡可能維持新套件的相容性（以取得套件的更新或修正），\
+可以用「\ ``>=``\ 」設定最低相容的版本，\
+或是使用「\ ``latest``\ 」設定永遠保持最新套件。
