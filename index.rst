@@ -28,7 +28,6 @@ The Little Node.js Book
    :maxdepth: 3
 
    readme
-   zh-tw/node_preface
    zh-tw/node_introduce
    zh-tw/node_javascript
    zh-tw/node_install
