@@ -6,8 +6,16 @@ npm 全名為 **N**\ ode **P**\ ackage **M**\ anager，\
 是 Node.js 的模組（modules）管理工具，
 類似 Perl 的 ppm 或 PHP 的 PEAR 等。\
 安裝 npm 後，\
-使用 ``npm install module_name`` 指令即可安裝新模組，
-維護管理模組的工作會更加輕鬆。\
+使用 ``npm install module_name`` 指令即可安裝新模組，\
+維護管理模組的工作會更加輕鬆。
+
+npm 可以讓 Node.js 的開發者，\
+直接利用、擴充線上的套件庫（packages registry），\
+加速軟體專案的開發。\
+npm 提供很友善的搜尋功能，\
+可以快速找到、安裝需要的套件，\
+當這些套件發行新版本時，\
+npm 也可以協助開發者自動更新這些套件。
 
 npm 不僅可用於安裝新的模組，它也支援搜尋、列出已安裝模組及更新的功能。
 
@@ -169,5 +177,116 @@ npm 是指令列工具（command-line tool），\
 使用 NPM 管理套件
 ================
 
-npm 目前擁有超過套件（packages），
+npm 目前擁有超過 6000 種套件（packages），\
+可以在 `npm registry <http://search.npmjs.org/>`_ 使用關鍵字搜尋套件。
 
+http://search.npmjs.org/
+
+舉例來說，在關鍵字欄位輸入「coffee-script」，\
+下方的清單就會自動列出包含 coffee-script 關鍵字的套件。
+
+.. image:: ../images/zh-tw/node_npm_registry.png
+
+接著我們回到終端機模式的操作，\
+``npm`` 的指令工具本身就可以完成套件搜尋的任務。
+
+例如，以下的指令同樣可以找出 coffee-script 相關套件。
+
+::
+
+    npm search coffee-script
+
+以下是搜尋結果的參考畫面：
+
+.. image:: ../images/zh-tw/node_npm_search.png
+
+找到需要的套件後（例如 express），即可使用以下指令安裝：
+
+::
+
+    npm install coffee-script
+
+值得注意的一點是，使用 ``npm install`` 會將指定的套件，\
+安裝在工作目錄（Working Directory）的 ``node_modules`` 資料夾下。
+
+以 Windows 為例，如果執行 ``npm install`` 的目錄位於：
+
+``C:\project1``
+
+那麼 npm 將會自動建立一個 node_modules 的子目錄（如果不存在）。
+
+``C:\project1\node_modules``
+
+並且將下載的套件，放置於這個子目錄，例如：
+
+``C:\project1\node_modules\coffee-script``
+
+這個設計讓專案可以個別管理相依的套件，\
+並且可以在專案佈署或發行時，\
+將這些套件（位於 node_modules）一併打包，\
+方便其它專案的使用者不必再重新下載套件。
+
+這個 ``npm install`` 的預設安裝模式為 **local**\ (本地)，\
+只會變更當前專案的資料夾，\
+不會影響系統。
+
+另一種安裝模式稱為 **global**\ （全域），\
+這種模式會將套件安裝到系統資料夾，\
+也就是 npm 安裝路徑的 ``node_modules`` 資料夾，\
+例如：
+
+``C:\Program Files\nodejs\node_modules``
+
+是否要使用全域安裝，\
+可以依照套件是否提供\ **新指令**\ 來判斷，\
+舉例來說，\
+express 套件提供 ``express`` 這個指令，\
+而 coffee-script 則提供 ``coffee`` 指令。
+
+在 local 安裝模式中，這些指令的程式檔案，\
+會被安裝到 ``node_modules`` 的 ``.bin`` 這個隱藏資料夾下。\
+除非將 .bin 的路徑加入 PATH 環境變數，\
+否則要執行這些指令將會相當不便。
+
+為了方便指令的執行，\
+我們可以在 ``npm install`` 加上 ``-g`` 或 ``--global`` 參數，\
+啟用 global 安裝模式。例如：
+
+::
+
+    npm install -g coffee-script
+    npm install -g express
+
+使用 global 安裝模式，\
+需要注意執行權限的問題，\
+若權限不足，可能會出現類似以下的錯誤訊息：
+
+::
+
+    npm ERR! Error: EACCES, permission denied '...'
+    npm ERR! 
+    npm ERR! Please try running this command again as root/Administrator.
+
+要獲得足夠得執行權限，請參考以下說明：
+
+* Windows 7 或 2008 以上，在「命令提示字元」的捷徑按右鍵，\
+  選擇「以系統管理員身分執行」，\
+  執行 npm 指令時就會具有 Administrator 身分。
+* Mac OS X 或 Linux 系統，可以使用 ``sudo`` 指令，例如：\
+  
+  ``sudo npm install -g express``
+* Linux 系統可以使用 root 權限登入，或是以「\ ``sudo su -``\ 」切換成 root 身分。\
+  （使用 root 權限操作系統相當危險，因此並不建議使用這種方式。）
+
+若加上 ``-g`` 參數，使用 ``npm install -g coffee-script`` 完成安裝後，\
+就可以在終端機執行 ``coffee`` 指令。例如：
+
+::
+
+    coffee -v
+
+.. topic:: 執行結果（範例）
+
+    ::
+
+        CoffeeScript version 1.2.0
