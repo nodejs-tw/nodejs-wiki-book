@@ -85,25 +85,17 @@ url 模組就跟如同他的命名一般，專門處理url 字串處理，裡面
    :scale: 100%
    :align: center
 
-
---
-
 .. image:: ../images/zh-tw/node_basic_rout_url_test.png
    :scale: 100%
    :align: center
-
---
 
 .. image:: ../images/zh-tw/node_basic_rout_url_default.png
    :scale: 100%
    :align: center
 
---
-
 .. image:: ../images/zh-tw/node_basic_rout_url_error.png
    :scale: 100%
    :align: center
-
 
 node.js 檔案讀取 
 ================
