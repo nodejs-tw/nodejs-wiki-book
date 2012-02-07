@@ -113,13 +113,11 @@ node.js 檔案讀取
    :language: javascript
 
 
-一開始直接載入**file system 模組**，載入名稱為 **fs** 。讀取檔案主要使用的方法為readFile ，裡面以三個參數 **路徑(file path)** , **編碼方式(encoding)** ， **回應函式(callback)** ，路徑必須要設定為靜態html 所在位置，才能指定到正確的檔案。靜態檔案的編碼方式也必須正確，這邊使用靜態檔案的編碼為 **utf8** ，如果編碼設定錯誤，node.js 讀取出來檔案結果會使用 byte raw 格式輸出。
+一開始直接載入**file system 模組**，載入名稱為 **fs** 。讀取檔案主要使用的方法為readFile ，裡面以三個參數 **路徑(file path)** , **編碼方式(encoding)** ， **回應函式(callback)** ，路徑必須要設定為靜態html 所在位置，才能指定到正確的檔案。靜態檔案的編碼方式也必須正確，這邊使用靜態檔案的編碼為 **utf8** ，如果編碼設定錯誤，node.js 讀取出來檔案結果會使用 byte raw 格式輸出，如果 **錯誤編碼格式，會導致輸出資料為 byte raw**
 
 .. image:: ../images/zh-tw/node_basic_file_byte.png
    :scale: 100%
    :align: center
-   
-**錯誤編碼格式，導致輸出資料為 byte raw**
 
 **回應函式** 中裡面會使用兩個變數，error 為錯誤資訊，如果讀取的檔案不存在，或者發生錯誤，error 數值會是 true ，如果成功讀取資料 error 將會是 false 。 content 則是檔案內容，資料讀取後將會把資料全數丟到content 這個變數當中。
 
