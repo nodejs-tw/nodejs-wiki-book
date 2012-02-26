@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+$for(author-meta)$
+  <meta name="author" content="$author-meta$" />
+$endfor$
+$if(date-meta)$
+  <meta name="dcterms.date" content="$date-meta$" />
+$endif$
+  <title>$if(title-prefix)$$title-prefix$ - $endif$$if(pagetitle)$$pagetitle$$endif$</title>
+$if(highlighting-css)$
+  <style type="text/css">
+$highlighting-css$
+  </style>
+$endif$
+$if(css)$
+$for(css)$
+  <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
+$endfor$
+$else$
+<style>
+  html { background-color: black; }
+  body { background-color: white; }
+  /* A section is a slide. It's size is 800x600, and this will never change */
+  section {
+      font-family: Arial, serif;
+      font-size: 20pt;
+    }
+  address, blockquote, dl, fieldset, form, h1, h2, h3, h4, h5, h6, hr, ol, p, pre, table, ul, dl { padding: 10px 20px 10px 20px; }
+  h1, h2, h3 {
+    text-align: center;
+    margin: 10pt 10pt 20pt 10pt;
+  }
+  ul, ol {
+    margin: 10px 10px 10px 50px;
+  }
+  section.titleslide h1 { margin-top: 200px; }
+  h1.title { margin-top: 150px; }
+  h1 { font-size: 180%; }
+  h2 { font-size: 120%; }
+  h3 { font-size: 100%; }
+  blockquote { font-style: italic }
+  q {
+    display: inline-block;
+    width: 700px;
+    height: 600px;
+    background-color: black;
+    color: white;
+    font-size: 60px;
+    padding: 50px;
+  }
+  footer {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+  }
+
+  /* Transition effect */
+  /* Feel free to change the transition effect for original
+     animations. See here:
+     https://developer.mozilla.org/en/CSS/CSS_transitions
+     How to use CSS3 Transitions: */
+  section {
+      -moz-transition: left 400ms linear 0s;
+      -webkit-transition: left 400ms linear 0s;
+      -ms-transition: left 400ms linear 0s;
+      transition: left 400ms linear 0s;
+  }
+
+  /* Before */
+  section { left: -150%; }
+  /* Now */
+  section[aria-selected] { left: 0; }
+  /* After */
+  section[aria-selected] ~ section { left: +150%; }
+
+  /* Incremental elements */
+
+  /* By default, visible */
+  .incremental > * { opacity: 1; }
+
+  /* The current item */
+  .incremental > *[aria-selected] { color: red; opacity: 1; }
+
+  /* The items to-be-selected */
+  .incremental > *[aria-selected] ~ * { opacity: 0.2; }
+
+  /*
+   * ---- copy from http://paulrouget.com/slides/html5inthewild/slides.html
+   */
+  /* Transition effect */
+  section {
+      -moz-transition: top 400ms linear 0s;
+      -webkit-transition: top 400ms linear 0s;
+      -o-transition: top 400ms linear 0s;
+      -ms-transition: top 400ms linear 0s;
+      transition: top 400ms linear 0s;
+  }
+  section { top: -150%; }
+  section[aria-selected] { top: 0; }
+  section[aria-selected] ~ section { top: +150% }
+
+  @font-face { src: url(BebasNeue.otf); font-family: 'bebas'; }
+  a { color: inherit; }
+  a:hover {text-decoration: underline;}
+  body { font-family: 'bebas'; }
+  html { background-color: black; }
+  body { background-color: white; }
+  section > * { position: absolute; }
+
+  mark {
+    position: absolute;
+    top: 250px; left: 0;
+    display: block;
+    height: 100px;
+    width: 100px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-size: 90px;
+  }
+
+  .features {
+      top: 250px;
+      left: 150px;
+      color: #C01801;
+      font-size: 70px;
+      list-style: none;
+  }
+
+  .features li {
+      position: relative;
+  }
+  .features em {
+      color: #ccc;
+      font-style: normal;
+      font-size: 40px;
+      display: inline-block;
+      text-align: right;
+      position: absolute;
+      top: 27px; right: -330px;
+  }
+
+  section:first-of-type h1 {
+    font-size: 130px;
+    padding-top: 10px;
+    font-weight: normal;
+    top: 10px;
+    left: 10px;
+    width: 780px;
+    text-align: center;
+    line-height: 160px;
+  }
+  section:first-of-type h2 {
+      font-size: 63px;
+  }
+
+  .site, h1 {
+      top: 0;
+      left: 150px;
+      font-size: 75px;
+      line-height: 600px;
+      vertical-align: middle;
+  }
+  h1 > em {
+      display: block;
+      text-align: left;
+      margin-top: -40px;
+      margin-left: 16px;
+      font-size: 40px;
+      line-height: 40px;
+      font-style: normal;
+  }
+
+  footer {
+    display: block;
+    text-align: right;
+    color: #C01801;
+    font-style: normal;
+    font-size: 60px;
+    bottom: 0; right: 10px;
+  }
+
+  img {
+      top: 150px;
+      left: 8px;
+      width: 290px;
+  }
+
+  .fullscreen > img,
+  .fullscreen > video {
+      top: 0px;
+      right: 0px;
+      width: 800px;
+      height: 600px;
+      display: block;
+  }
+  .fullscreen {
+      background-color: black;
+  }
+
+
+  #ten {
+    color: #C01801;
+    font-size: 150px;
+    vertical-align: bottom;
+    letter-spacing: -15px;
+    display: block;
+    position: absolute;;
+    left: 0px;
+    bottom: 25px;
+  }
+
+  h2 {
+      top: 190px;
+      font-size: 65px;
+      line-height: 60px;
+      padding-left: 130px;
+  }
+</style>
+$endif$
+$if(math)$
+  $math$
+$endif$
+$for(header-includes)$
+  $header-includes$
+$endfor$
+</head>
+<body>
+$if(title)$
+<section>
+  <h1 class="title">$title$</h1>
+$for(author)$
+  <h2 class="author">$author$</h2>
+$endfor$
+  <h3 class="date">$date$</h3>
+</section>
+$endif$
+$for(include-before)$
+$include-before$
+$endfor$
+$body$
+$for(include-after)$
+$include-after$
+$endfor$
+$dzslides-core$
+</body>
+</html>
