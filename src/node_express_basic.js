@@ -1,7 +1,8 @@
 /**
  * @overview
  *
- * @author 
+ * @author Caesar Chi
+ * @blog clonn.blogspot.com
  * @version 2012/02/26
  */
 
