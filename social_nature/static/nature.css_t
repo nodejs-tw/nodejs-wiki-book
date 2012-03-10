@@ -243,3 +243,11 @@ div.viewcode-block:target {
     border-top: 1px solid #ac9;
     border-bottom: 1px solid #ac9;
 }
+
+#disqus_thread h3, #disqus_thread h4 {
+    background: none;
+}
+
+.addthis_toolbox {
+    padding-top: 10px;
+}
