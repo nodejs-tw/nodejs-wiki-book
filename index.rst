@@ -10,7 +10,7 @@
    @latex_contentsname: 目錄
    @pdf_cover: cover.tex
    @epub_cover: _static/cover.png
-   @html_theme: nature
+   @html_theme: social_nature
    @epub_theme: epub_simple
    @mobi_theme: mobi_simple
 
