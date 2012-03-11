@@ -1,7 +1,7 @@
 .. Settings
-   @title: The Little Node.js Book
-   @authors: clonn, lyhcode
-   @basename: the-little-nodejs-book-zh-tw
+   @title: Node.js 台灣社群協作電子書
+   @authors: Node.js Taiwan
+   @basename: nodejs-wiki-book
    @language: zh_TW
    @latex_parindent: 2em
    @latex_paper_size: b5
@@ -21,9 +21,9 @@
    %% \renewcommand{\sectionmark}[1]{\markright{~\thesection~~#1~}{}}
    \renewcommand\bibname{參考資料}
 
-#######################
-The Little Node.js Book
-#######################
+##################
+Node.js Wiki Book
+##################
 
 .. toctree::
    :maxdepth: 3
