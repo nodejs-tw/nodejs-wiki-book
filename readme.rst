@@ -29,14 +29,16 @@ paid for this book.**
 
 http://creativecommons.org/licenses/by-nc/3.0/legalcode
 
-關於作者
-========
+作者
+====
 
-Node.js Taiwan 社群協作者，以下作者名單依照字母排序。
+本書由 Node.js Taiwan 社群成員協作，以下名單依照字母排序。
 
 * Caesar Chi (clonn)
 * Fillano Feng (fillano)
 * Kyle Lin (lyhcode)
+
+Node.js Taiwan 是一個自由開放的技術學習社群，我們歡迎您加入一起學習、研究及分享。
 
 最新版本
 ========
