@@ -21,9 +21,9 @@
    %% \renewcommand{\sectionmark}[1]{\markright{~\thesection~~#1~}{}}
    \renewcommand\bibname{參考資料}
 
-##################
-Node.js Wiki Book
-##################
+##########################
+Node.js 台灣社群協作電子書
+##########################
 
 .. toctree::
    :maxdepth: 3
