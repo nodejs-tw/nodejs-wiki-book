@@ -76,3 +76,11 @@ http://github.com/nodejs-tw/nodejs-wiki-book
 
    \setcounter{secnumdepth}{1}
 
+Node.js 精選文章收錄流程
+========================
+
+1. 先將連結放到 Node.js 精選
+2. 跟作者說你的文章已經被列入精選，可否將內文授權給node.js wiki book收錄
+3. 作者同意後由工作小組負責整理圖文
+4. 感謝作者並通知文章已收錄，請作者看看是否滿意，不滿意可以再調整
+5. 大力幫作者推銷文章.....:XD
