@@ -49,6 +49,10 @@ Node.js Taiwan 是一個自由開放的技術學習社群，我們歡迎您加�
 下載電子書
 ==========
 
+線上閱讀本書。
+
+http://book.nodejs.tw/
+
 PDF格式，適合一般電腦及7吋以上平板電腦閱讀
 
 http://contpub.org/download/nodejs-wiki-book.pdf
