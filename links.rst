@@ -5,6 +5,6 @@ Node.js 精選
 Express
 =======
 
-* link1 [聯繫中]
-* link2 [聯繫中]
-* link3 [聯繫中]
+* 使用 NodeJS + Express 從 GET/POST Request 取值 http://fred-zone.blogspot.com/2012/02/nodejs-express-getpost-request.html [邀稿中]
+* link2 [邀稿中]
+* link3 [邀稿中]
