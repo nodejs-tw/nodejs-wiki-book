@@ -143,4 +143,57 @@ Express 裡面有一個十分好用的應用概念稱為middleware，可以透�
 
 內部宣告一組預設的使用者分別給予名稱設定，藉由app.all 這個方法，可以先將路由雛形建立，再接下來設定 app.get 的路徑格式，只要符合格式就會分配進入對應的方法中，像上面的程式當中，如果使用者輸入路徑為 /user/0 ，除了執行 app.all 程式之後，執行next 方法就會對應到路徑設定為 /user/:id 的這個方法當中。如果使用者輸入路徑為 /user/0/edit ，就會執行到 /user/:id/edit 的對應方法。
 
+==Express GET 應用範例 ==
+
+我們準備一個使用GET方法傳送資料的表單。
+
+.. literalinclude:: ../src/view/express_get_example_form.html
+   :language: javascript
+
+這個表單沒有什麼特別的地方，我們只需要看第9行，form使用的method是GET，然後action是"http://localhost:3000/Signup"，等一下我們要來撰寫/Signup這個URL Path的處理程式。
+
+===處理 Signup 行為===
+
+我們知道所謂的GET方法，會透過URL來把表單的值給帶過去，以上面的表單來說，到時候URL會以這樣的形式傳遞
+
+::
+
+    http://localhost:3000/Signup?username=xxx&email=xxx
+
+所以要能處理這樣的資料，必須有以下功能:
+
+ * 解析URL
+ * 辨別動作是Signup
+ * 解析出username和email
+
+一旦能取得username和email的值，程式就能加以應用了。
+
+處理 Signup 的程式碼雛形，
+
+.. code-block:: javascript
+
+    // load module
+    var url  = require('url');
+
+    urlData = url.parse(req.url,true);
+    action = urlData.pathname;
+    res.writeHead(200, {"Content-Type":"text/html; charset=utf-8"});
+
+    if (action === "/Signup") {
+       user = urlData.query;
+       res.end("<h1>" + user.username + "歡迎您的加入</h1><p>我們已經將會員啟用信寄至" + user.email + "</p>");
+    }
+
+首先需要加載 url module，它是用來協助我們解析URL的模組，接著使用 url.parse 方法，第一個傳入url 字串變數，也就是req.url。另外第二個參數的用意是，設為ture則引進 querystring模組來協助處理，預設是false。它影響到的是 urlData.query，設為true會傳回物件，不然就只是一般的字串。url.parse 會將字串內容整理成一個物件，我們把它指定給urlData。
+
+action 變數作為記錄pathname，這是我們稍後要來判斷目前網頁的動作是什麼。接著先將 html 表頭資訊 (Header)準備好，再來判斷路徑邏輯，如果是 */Signup* 這個動作，就把urlData.query裡的資料指定給user，然後輸出user.username和user.email，把使用者從表單註冊的資料顯示於頁面中。
+
+最後進行程式測試，啟動 node.js 主程式之後，開啟瀏覽器就會看到表單，填寫完畢按下送出，就可以看到結果了。
+
+完整 node.js 程式碼如下，
+
+.. literalinclude:: ../src/node_express_get_form.js
+   :language: javascript
+
+
 
