@@ -196,4 +196,7 @@ action 變數作為記錄pathname，這是我們稍後要來判斷目前網頁�
    :language: javascript
 
 
+==本章節原始資料==
+
+ * [Node.jS初學者筆記(1)-用GET傳送資料] (http://ithelp.ithome.com.tw/question/10087402)
 
