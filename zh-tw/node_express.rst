@@ -196,7 +196,64 @@ action 變數作為記錄pathname，這是我們稍後要來判斷目前網頁�
    :language: javascript
 
 
-==本章節原始資料==
+==Express POST 應用範例 ==
+
+一開始準備基本的 html 表單，傳送內容以 POST 方式， form 的 action 屬性設定為 POST，其餘 html 內容與前一個範例應用相同，
+
+.. literalinclude:: ../src/view/express_post_example_form.html
+   :language: javascript
+
+node.js 的程式處理邏輯與前面 GET 範例類似，部分程式碼如下，
+
+.. code-block:: javascript
+
+    qs   = require('querystring'),
+
+    if (action === "/Signup") {
+        formData = '';
+        req.on("data", function (data) {
+
+            formData += data;
+
+        });
+
+        req.on("end", function () {
+            user = qs.parse(formData);
+            res.end("<h1>" + user.username + "歡迎您的加入</h1><p>我們已經將會員啟用信寄至" + user.email + "</p>");
+        });
+    }
+
+主要加入了'querystring' 這個moduel，方便我們等一下解析由表單POST回來的資料，另外加入一個formData的變數，用來搜集待等一下表單回傳的資料。前面的GET 範例，我們只從req 拿出url的資料，這次要在利用 req 身上的事件處理。
+
+JavaScript在訂閱事件時使用addEventListener，而node.js使用的則是on。這邊加上了監聽 *data* 的事件，會在瀏覽器傳送資料到 Web Server時被執行，參數是它所接收到的資料，型態是字串。
+
+接著再增加 *end* 的事件，當瀏覽器的請求事件結束時，它就會動作。
+
+由於瀏覽器使用POST在上傳資料時，會將資料一塊塊地上傳，因為我們在監聽data事件時，透過formData 變數將它累加起來<
+不過由於我們上傳的資料很少，一次就結束，不過如果日後需要傳的是資料比較大的檔案，這個累加動作就很重要。
+
+當資料傳完，就進到end事件中，會用到 qs.parse來解析formData。formData的內容是字串，內容是：
+
+::
+
+    username=wordsmith&email=wordsmith%40some.where
+
+而qs.parse可以幫我們把這個querystring轉成物件的格式，也就是：
+
+::
+
+    {username=wordsmith&email=wordsmith%40some.where}
+
+一旦轉成物件並指定給user之後，其他的事情就和GET方法時操作的一樣，寫response的表頭，將內容回傳，並將user.username和user.email代入到內容中。
+
+修改完成後，接著執行 node.js 程式，啟動 web server ，開啟瀏覽器進入表單測試看看，POST 的方式能否順利運作。
+
+完整程式碼如下，
+
+.. literalinclude:: ../src/node_express_post_form.js
+   :language: javascript
+
+==原始資料==
 
  * [Node.jS初學者筆記(1)-用GET傳送資料] (http://ithelp.ithome.com.tw/question/10087402)
-
+ * [Node.jS初學者筆記(2)-用POST傳送資料] (http://ithelp.ithome.com.tw/question/10087489)
