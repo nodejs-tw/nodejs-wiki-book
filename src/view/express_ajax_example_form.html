@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Node.js菜鳥筆記(3)</title>   
+            <link rel="stylesheet" href="/css/style.css" type="text/css" media="all" />
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    </head>
+    <body> 
+        <h1>Node.js菜鳥筆記-註冊(用Ajax)</h1>
+            <form id="signup" action="/Signup" method="POST">
+                    <label>使用者名稱：</label><input type="text" id="username" name="username" /><br>
+                    <label>電子郵件：</label><input type="text" id="email" name="email" /><br>
+                    <input type="submit" value="註冊我的帳號" /><br>
+            </form>
+            <div id="result">
+            </div>
+            <script type="text/javascript">
+                $(function(){
+                   $('#signup input[type="submit"]').click(function(e){                          
+                       var user = {};
+                       user.username = $("#username").val();
+                       user.email = $("#email").val();
+
+                       $.post("/Signup",user,function(data){
+                            greet(data)                             
+                       });
+
+                       e.preventDefault();
+                    });
+                           
+                    var greet = function(msg){
+                        var resultNode = $('#result'),
+                            greeting = $('<h2>Hi,'+msg.username+',你的會員id是:'+ msg.id +'我們會將會員啟動信寄至'+msg.email+'</h2>');
+
+                        $('#signup').hide();
+                        resultNode.html("");
+                        resultNode.append(greeting);
+                    };       
+                });      
+            </script>           
+    </body>
+</html>
