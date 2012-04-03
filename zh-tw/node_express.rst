@@ -152,7 +152,7 @@ Express 裡面有一個十分好用的應用概念稱為middleware，可以透�
 
 這個表單沒有什麼特別的地方，我們只需要看第9行，form使用的method是GET，然後action是"http://localhost:3000/Signup"，等一下我們要來撰寫/Signup這個URL Path的處理程式。
 
-===處理 Signup 行為===
+*處理 Signup 行為*
 
 我們知道所謂的GET方法，會透過URL來把表單的值給帶過去，以上面的表單來說，到時候URL會以這樣的形式傳遞
 
@@ -253,7 +253,71 @@ JavaScript在訂閱事件時使用addEventListener，而node.js使用的則是on
 .. literalinclude:: ../src/node_express_post_form.js
    :language: javascript
 
+==Express POST 應用範例 ==
+
+在Node.js要使用Ajax傳送資料，並且與之互動，在接受資料的部份沒有太大的差別，client端不是用GET就是用POST來傳資料，重點在處理完後，用JSON格式回傳。當然Ajax不見得只傳JSON格式，有時是回傳一段HTML碼，不過後者對伺服器來說，基本上就和前兩篇沒有差別了。所以我們還是以回傳JSON做為這一回的主題。
+
+這一回其實大多數的工作都會落在前端Ajax上面，前端要負責發送與接收資料，並在接收資料後，撤掉原先發送資料的表單，並將取得的資料，改成HTML格式之後，放上頁面。
+
+首先先準備 HTML 靜態頁面資料，
+
+.. literalinclude:: ../src/view/express_ajax_example_form.html
+   :language: javascript
+
+HTML 頁面上準備了一個表單，用來傳送註冊資料。接著直接引用了 Google CDN 來載入 jQuery，用來幫我們處理 Ajax 的工作，這次要傳送和接收的工作，很大的變動都在 HTML 頁面上的 JavaScript當中。我們要做的事有(相關 jQuery 處理這邊不多做贅述，指提起主要功能解說)：
+
+ * 用jQUery取得submit按鈕，綁定它的click動作
+ * 取得表單username和email的值，存放在user這個物件中
+ * 用jQuery的$.post方法，將user的資料傳到Server
+ * 一旦成功取得資料後，透過greet這個function，組成回報給user的訊息
+  * 清空原本給使用者填資料的表單
+  * 將Server回傳的username、email和id這3個資料，組成回應的訊息
+  * 將訊息放到原本表單的位置
+
+經過以上的處理後，一個Ajax的表單的基本功能已經完成。
+
+接著進行 node.js 主要程式的編輯，部分程式碼如下，
+
+.. code-block:: javascript
+
+    var fs   = require("fs"),
+        qs   = require('querystring');
+
+    if (action === "/Signup") {
+        formData = '';
+        req.on("data", function (data) {
+
+            formData += data;
+
+        });
+
+        req.on("end", function () {
+            var msg;
+
+            user = qs.parse(formData);
+            user.id = "123456";
+            msg = JSON.stringify(user);
+            res.writeHead(200, {"Content-Type":"application/json; charset=utf-8","Content-Length":msg.length});
+            res.end(msg);
+        });
+    }
+
+這裡的程式和前面 POST 範例，基本上大同小異，差別在：
+
+ * 幫user的資料加上id，隨意存放一些文字進去，讓Server回傳的資料多於Client端傳上來的，不然會覺得Server都沒做事。
+ * 增加了msg這個變數，存放將user物件JSON文字化的結果。JSON.stringify這個轉換函式是V8引擎所提供的，如果你好奇的話。
+ * 大重點來了，我們要告訴Client端，這次回傳的資料格式是JSON，所在Content-type和Content-Length要提供給Client。
+
+Server很輕鬆就完成任務了，最後進行程式測試，啟動 node.js 主程式之後，開啟瀏覽器就會看到表單，填寫完畢按下送出，就可以看到結果了。
+
+最後 node.js 本篇範例程式碼如下，
+
+.. literalinclude:: ../src/node_express_ajax_form.js
+   :language: javascript
+
+
 ==原始資料==
 
- * [Node.jS初學者筆記(1)-用GET傳送資料] (http://ithelp.ithome.com.tw/question/10087402)
- * [Node.jS初學者筆記(2)-用POST傳送資料] (http://ithelp.ithome.com.tw/question/10087489)
+ * [Node.JS初學者筆記(1)-用GET傳送資料] (http://ithelp.ithome.com.tw/question/10087402)
+ * [Node.JS初學者筆記(2)-用POST傳送資料] (http://ithelp.ithome.com.tw/question/10087489)
+ * [Node.JS初學者筆記(3)-用Ajax傳送資料] (http://ithelp.ithome.com.tw/question/10087627)
