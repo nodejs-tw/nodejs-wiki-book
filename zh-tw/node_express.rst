@@ -8,7 +8,8 @@ Express 介紹
 
 這個套件是由TJ Holowaychuk 製作而成的套件，裡面包含基本的路由處理(route)，http 資料處理（GET/POST/PUT），另外還與樣板套件（js html template engine）搭配，同時也可以處理許多複雜化的問題。
 
-=Express 安裝=
+Express 安裝
+===========
 
 安裝方式十分簡單，只要透過之前介紹的 NPM 就可以使用簡單的指令安裝，指令如下，
 
@@ -18,7 +19,8 @@ Express 介紹
 
 這邊建議需要將此套件安裝成為全域模組，方便日後使用。
 
-=Express 基本操作=
+Express 基本操作
+================
 
 express 的使用也十分簡單，先來建立一個基本的hello world ，
 
@@ -37,7 +39,8 @@ express 的使用也十分簡單，先來建立一個基本的hello world ，
 
 可以從上面的程式碼發現，基本操作與node.js http 的建立方式沒有太大差異，主要差在當我們設定路由時，可以直接透過 app.get 方式設定回應與接受方式。
 
-==Express 路由處理==
+Express 路由處理
+================
 
 Express 對於 http 服務上有許多包裝，讓開發者使用及設定上更為方便，例如有幾個路由設定，那我們就統一藉由 app.get 來處理，
 
@@ -106,7 +109,8 @@ Express 對於 http 服務上有許多包裝，讓開發者使用及設定上更
 .. literalinclude:: ../src/node_express_basic.js
    :language: javascript
 
-==Express middleware==
+Express middleware
+==================
 
 Express 裡面有一個十分好用的應用概念稱為middleware，可以透過 middleware 做出複雜的效果，同時上面也有介紹 next 方法參數傳遞，就是靠 middleware 的概念來傳遞參數，讓開發者可以明確的控制程式邏輯。
 
@@ -134,8 +138,8 @@ Express 裡面有一個十分好用的應用概念稱為middleware，可以透�
 
 從上面的結果可以得知，剛才設定的 middleware 都生效了，在 app.use 設定的 middleware 是所有url 皆會執行方法，如果有指定特定方法，就可以使用 app.get 的 middleware 設定，在 app.get 函式的第二個參數，就可以帶入函式，或者是匿名函式，只要函式裡面最後會接受 request, response, next 這三個參數，同時也有正確指定 next 函式的執行時機，最後都會執行到最後一個方法，當然開發者也可以評估程式邏輯要執行到哪一個階段，讓邏輯可以更為分明。
 
-==Express 路由應用==
-
+Express 路由應用
+================
 在實際開發上可能會遇到需要使用參數等方式，混和變數一起使用，express 裡面提供了一個很棒的處理方法 app.all 這個方式，可以先採用基本路由配對，再將設定為每個不同的處理方式，開發者可以透過這個方式簡化自己的程式邏輯，
 
 .. literalinclude:: ../src/node_express_basic_app.js
@@ -143,7 +147,8 @@ Express 裡面有一個十分好用的應用概念稱為middleware，可以透�
 
 內部宣告一組預設的使用者分別給予名稱設定，藉由app.all 這個方法，可以先將路由雛形建立，再接下來設定 app.get 的路徑格式，只要符合格式就會分配進入對應的方法中，像上面的程式當中，如果使用者輸入路徑為 /user/0 ，除了執行 app.all 程式之後，執行next 方法就會對應到路徑設定為 /user/:id 的這個方法當中。如果使用者輸入路徑為 /user/0/edit ，就會執行到 /user/:id/edit 的對應方法。
 
-==Express GET 應用範例 ==
+Express GET 應用範例
+====================
 
 我們準備一個使用GET方法傳送資料的表單。
 
@@ -196,7 +201,8 @@ action 變數作為記錄pathname，這是我們稍後要來判斷目前網頁�
    :language: javascript
 
 
-==Express POST 應用範例 ==
+Express POST 應用範例
+=====================
 
 一開始準備基本的 html 表單，傳送內容以 POST 方式， form 的 action 屬性設定為 POST，其餘 html 內容與前一個範例應用相同，
 
@@ -253,7 +259,8 @@ JavaScript在訂閱事件時使用addEventListener，而node.js使用的則是on
 .. literalinclude:: ../src/node_express_post_form.js
    :language: javascript
 
-==Express POST 應用範例 ==
+Express POST 應用範例
+=====================
 
 在Node.js要使用Ajax傳送資料，並且與之互動，在接受資料的部份沒有太大的差別，client端不是用GET就是用POST來傳資料，重點在處理完後，用JSON格式回傳。當然Ajax不見得只傳JSON格式，有時是回傳一段HTML碼，不過後者對伺服器來說，基本上就和前兩篇沒有差別了。所以我們還是以回傳JSON做為這一回的主題。
 
@@ -316,8 +323,8 @@ Server很輕鬆就完成任務了，最後進行程式測試，啟動 node.js �
    :language: javascript
 
 
-==原始資料==
-
+原始資料
+========
  * [Node.JS初學者筆記(1)-用GET傳送資料] (http://ithelp.ithome.com.tw/question/10087402)
  * [Node.JS初學者筆記(2)-用POST傳送資料] (http://ithelp.ithome.com.tw/question/10087489)
  * [Node.JS初學者筆記(3)-用Ajax傳送資料] (http://ithelp.ithome.com.tw/question/10087627)
