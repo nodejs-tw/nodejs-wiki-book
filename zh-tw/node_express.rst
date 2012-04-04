@@ -321,3 +321,4 @@ Server很輕鬆就完成任務了，最後進行程式測試，啟動 node.js �
  * [Node.JS初學者筆記(1)-用GET傳送資料] (http://ithelp.ithome.com.tw/question/10087402)
  * [Node.JS初學者筆記(2)-用POST傳送資料] (http://ithelp.ithome.com.tw/question/10087489)
  * [Node.JS初學者筆記(3)-用Ajax傳送資料] (http://ithelp.ithome.com.tw/question/10087627)
+
