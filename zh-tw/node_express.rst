@@ -261,7 +261,7 @@ JavaScript在訂閱事件時使用addEventListener，而node.js使用的則是on
 .. literalinclude:: ../src/node_express_post_form.js
    :language: javascript
 
-Express POST 應用範例
+Express AJAX 應用範例
 =====================
 
 在Node.js要使用Ajax傳送資料，並且與之互動，在接受資料的部份沒有太大的差別，client端不是用GET就是用POST來傳資料，重點在處理完後，用JSON格式回傳。當然Ajax不見得只傳JSON格式，有時是回傳一段HTML碼，不過後者對伺服器來說，基本上就和前兩篇沒有差別了。所以我們還是以回傳JSON做為這一回的主題。
@@ -324,8 +324,8 @@ Server很輕鬆就完成任務了，最後進行程式測試，啟動 node.js �
 .. literalinclude:: ../src/node_express_ajax_form.js
    :language: javascript
 
-原始資料
-========
+原始資料提供
+============
 
  * [Node.JS初學者筆記(1)-用GET傳送資料] (http://ithelp.ithome.com.tw/question/10087402)
  * [Node.JS初學者筆記(2)-用POST傳送資料] (http://ithelp.ithome.com.tw/question/10087489)
