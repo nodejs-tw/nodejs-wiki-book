@@ -289,6 +289,7 @@ plurk.coffee 程式碼，
 
         @bot = bot
 
+
 終於，完成 Adapter！Hubot 專案裡面的 scripts 資料夾內是互動部分，不需要像 Adapter 如此大費周章處理，只新增檔案並且設計好對白，之後就會回噗了，我開發用的機器人在此，大家可以去跟他玩玩，[http://plurk.com/elct9620_bot](http://plurk.com/elct9620_bot)
 
 原始資料提供
