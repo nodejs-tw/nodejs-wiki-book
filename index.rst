@@ -1,5 +1,5 @@
 .. Settings
-   @title: Node.js 台灣社群協作電子書
+   @title: Node.js 中文電子書
    @authors: Node.js Taiwan
    @basename: nodejs-wiki-book
    @language: zh_TW
