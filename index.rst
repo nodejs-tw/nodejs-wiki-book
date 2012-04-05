@@ -38,3 +38,4 @@ Node.js 台灣社群協作電子書
    zh-tw/node_express
    zh-tw/node_coffeescript
    links
+   bibliography
