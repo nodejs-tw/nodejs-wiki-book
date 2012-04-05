@@ -37,4 +37,5 @@ Node.js 台灣社群協作電子書
    zh-tw/node_npm
    zh-tw/node_express
    zh-tw/node_coffeescript
+   zh-tw/node_application_hubot
    links
