@@ -4,12 +4,12 @@ Express 介紹
 
 在前面的node.js 基礎當中介紹許多許多開設http 的使用方法及介紹，以及許多基本的node.js 基本應用。
 
-接下來要介紹一個套件稱為express [Express] (http://expressjs.com/) ，這個套件主要幫忙解決許多node.js http server 所需要的基本服務，讓開發http service 變得更為容易，不需要像之前需要透過層層模組（module）才有辦法開始編寫自己的程式。
+接下來要介紹一個套件稱為express [Express](http://expressjs.com/) ，這個套件主要幫忙解決許多node.js http server 所需要的基本服務，讓開發http service 變得更為容易，不需要像之前需要透過層層模組（module）才有辦法開始編寫自己的程式。
 
 這個套件是由TJ Holowaychuk 製作而成的套件，裡面包含基本的路由處理(route)，http 資料處理（GET/POST/PUT），另外還與樣板套件（js html template engine）搭配，同時也可以處理許多複雜化的問題。
 
 Express 安裝
-===========
+============
 
 安裝方式十分簡單，只要透過之前介紹的 NPM 就可以使用簡單的指令安裝，指令如下，
 
@@ -76,6 +76,7 @@ Express 對於 http 服務上有許多包裝，讓開發者使用及設定上更
         res.send('number: ' + req.params.number);
     }); 
 
+
 裡面使用到:number ，從網址輸入之後就可以直接使用 req.params.number 取得所輸入的資料，變成url 參數使用，當然前面也是可以加上路徑的設定， /user/:id，在瀏覽器上路徑必須符合 /user/xxx，透過 req.params.id 就可以取到 xxx這個字串值。
 
 另外，express 參數處理也提供了路由參數配對處理，也可以透過正規表示法作為參數設定，
@@ -109,6 +110,7 @@ Express 對於 http 服務上有許多包裝，讓開發者使用及設定上更
 .. literalinclude:: ../src/node_express_basic.js
    :language: javascript
 
+
 Express middleware
 ==================
 
@@ -117,7 +119,6 @@ Express 裡面有一個十分好用的應用概念稱為middleware，可以透�
 .. code-block:: javascript
     
     // .. create http server
-
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(express.session());
@@ -140,6 +141,7 @@ Express 裡面有一個十分好用的應用概念稱為middleware，可以透�
 
 Express 路由應用
 ================
+
 在實際開發上可能會遇到需要使用參數等方式，混和變數一起使用，express 裡面提供了一個很棒的處理方法 app.all 這個方式，可以先採用基本路由配對，再將設定為每個不同的處理方式，開發者可以透過這個方式簡化自己的程式邏輯，
 
 .. literalinclude:: ../src/node_express_basic_app.js
@@ -322,9 +324,9 @@ Server很輕鬆就完成任務了，最後進行程式測試，啟動 node.js �
 .. literalinclude:: ../src/node_express_ajax_form.js
    :language: javascript
 
-
 原始資料
 ========
+
  * [Node.JS初學者筆記(1)-用GET傳送資料] (http://ithelp.ithome.com.tw/question/10087402)
  * [Node.JS初學者筆記(2)-用POST傳送資料] (http://ithelp.ithome.com.tw/question/10087489)
  * [Node.JS初學者筆記(3)-用Ajax傳送資料] (http://ithelp.ithome.com.tw/question/10087627)
