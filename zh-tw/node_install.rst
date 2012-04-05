@@ -4,19 +4,32 @@ Node.js 安裝與設定
 
 本篇將講解如何在各個不同OS建立NodeJS 環境，目前NodeJS 0.4.8版本環境架設方式需依賴Linux指令才可編譯完成，當然在不同作業系統中也已經有NodeJS package，可以直接使用指令快速架設。以下各不同作業系統解說如何安裝NodeJS。
 
-Linux base
-==========
+Ubuntu Linux
+============
 
+更新：推薦使用 nvm。
 
-.. topic:: Ubuntu Linux 使用 apt-get 安裝 Node.js
+::
 
-    ::
+    git clone git://github.com/creationix/nvm.git ~/.nvm
+    echo ". ~/.nvm/nvm.sh" >> ~/.bashrc
+    nvm install v0.6.14
+    nvm alias default v0.6.14
+
+以上可參考： http://dreamerslab.com/blog/tw/how-to-setup-a-node-js-development-environment-on-ubuntu-11-04/
+
+使用 APT 套件管理工具是常見的方法，以下是使用社群提供的 PPA 安裝方式。
+
+::
     
-        sudo apt-get install python-software-properties
-        sudo add-apt-repository ppa:chris-lea/node.js-devel
-        sudo apt-get update
-        sudo apt-get nodejs
+    sudo apt-get install python-software-properties
+    sudo add-apt-repository ppa:chris-lea/node.js-devel
+    sudo apt-get update
+    sudo apt-get nodejs
 
+
+Other Linux
+===========
 
 Linux 很適合作為 NodeJS 的伺服器作業系統及開發環境。安裝前，請先確認以下套件已正確安裝。
 
