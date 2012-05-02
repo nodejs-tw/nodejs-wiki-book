@@ -25,7 +25,7 @@ Ubuntu Linux
     sudo apt-get install python-software-properties
     sudo add-apt-repository ppa:chris-lea/node.js-devel
     sudo apt-get update
-    sudo apt-get nodejs
+    sudo apt-get install nodejs
 
 
 Other Linux

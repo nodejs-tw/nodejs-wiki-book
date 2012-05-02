@@ -79,7 +79,7 @@ Ubuntu Linux 的使用者，\
         sudo apt-get install python-software-properties
         sudo add-apt-repository ppa:gias-kay-lee/npm
         sudo apt-get update
-        sudo apt-get npm
+        sudo apt-get install npm
 
 npm 官方提供的安裝程式 ``install.sh``\ ，\
 可以適用於大多數的 Linux 系統。\
