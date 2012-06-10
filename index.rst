@@ -1,3 +1,5 @@
+:orphan:
+
 .. Settings
    @title: Node.js 中文電子書
    @authors: Node.js Taiwan
@@ -25,19 +27,11 @@
 Node.js 台灣社群協作電子書
 ##########################
 
-.. toctree::
-   :maxdepth: 3
+.. image:: images/nodejs.png
+   :width: 50%
+   :align: right
 
-   readme
-   zh-tw/preface
-   zh-tw/node_introduce
-   zh-tw/node_javascript
-   zh-tw/node_install
-   zh-tw/node_basic
-   zh-tw/node_npm
-   zh-tw/node_express
-   zh-tw/node_coffeescript
-   zh-tw/node_application_hubot
-   zh-tw/node_utils
-   links
-   bibliography
+這是一本關於 Node.js 技術的開放源碼電子書，我們使用 GitHub 維護電子書內容，並交由 ContPub（Continuous Publishing）系統自動線上發佈。本書提供 PDF、EPUB、MOBI 及 HTML 等格式，您除了可以在網站檢視本書所有內容，也可以將電子書下載至閱讀器保存。
+
+.. include:: contents.rst.inc
+
