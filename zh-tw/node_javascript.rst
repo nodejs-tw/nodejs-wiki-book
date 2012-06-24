@@ -41,7 +41,7 @@ Scope 與 Closure
         var free_variable1 = 3;
         return function inner(arg2) {
             var local_variable1 =2;//arg2及local_variable1對inner函數來說，都是本地變數
-            return arg1 + arg2 + free_variable + local_variable1;
+            return arg1 + arg2 + free_variable1 + local_variable1;
         };
     }
 
