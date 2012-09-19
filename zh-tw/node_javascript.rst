@@ -34,7 +34,7 @@ Scope 與 Closure
 
 為了維護程式執行時所依賴的變數，即使執行時程式運行在原本的scope之外，他的變數作用範圍仍然維持不變。這時程式依賴的自由變數（定義時不是local的，而是在上一層scope定義的變數）一樣可以使用，就好像被關閉起來，所以叫做Closure。用程式看比較好懂：
 
-.. code-block:: js
+.. code-block:: javascript
 
     function outter(arg1) {
         //arg1及free_variable1對inner函數來說，都是自由變數
@@ -45,9 +45,9 @@ Scope 與 Closure
         };
     }
 
-var a = outter(1);//變數a 就是outter函數執行後返回的inner函數
-var b = a(4);//執行inner函數，執行時上下文已經在outter函數之外，但是仍然能正常執行，而且可以使用定義在outter函數裡面的arg1及free_variable1變數
-console.log(b);//結果10
+:code:`var a = outter(1);//變數a` 就是outter函數執行後返回的inner函數
+:code:`var b = a(4);//執行inner函數`，執行時上下文已經在outter函數之外，但是仍然能正常執行，而且可以使用定義在outter函數裡面的arg1及free_variable1變數
+:code:`console.log(b);//結果10`
 
 在Javascript中，scope最主要的單位是函數（另外有global及eval），所以有可能製造出closure的狀況，通常在形式上都是有巢狀的函數定義，而且內側的函數使用到定義在外側函數裡面的變數。
 
@@ -68,86 +68,96 @@ callback在形式上，其實就是把函數傳給函數，然後在適當的時
 在 物件 中，可以使用 物件.emit(事件名稱, 參數...) 呼叫傳入的callback函數
 這是Observer Pattern的簡單實作，而且跟在網頁中使用DOM的addEventListener使用上很類似，也很容易上手。不過NodeJS是大量使用非同步方式執行的應用，所以程式邏輯幾乎都是寫在callback函數中，當邏輯比較複雜時，大量的callback會讓程式看起來很複雜，也比較難單元測試。舉例來說：
 
-var p_client = new Db('integration_tests_20', new Server("127.0.0.1", 27017, {}), {'pk':CustomPKFactory});
-p_client.open(function(err, p_client) {
-  p_client.dropDatabase(function(err, done) {
-    p_client.createCollection('test_custom_key', function(err, collection) {
-      collection.insert({'a':1}, function(err, docs) {
-        collection.find({'_id':new ObjectID("aaaaaaaaaaaa")}, function(err, cursor) {
-          cursor.toArray(function(err, items) {
-            test.assertEquals(1, items.length);
-            p_client.close();
+.. code-block:: javascript
+
+    var p_client = new Db('integration_tests_20', new Server("127.0.0.1", 27017, {}), {'pk':CustomPKFactory});
+    p_client.open(function(err, p_client) {
+      p_client.dropDatabase(function(err, done) {
+        p_client.createCollection('test_custom_key', function(err, collection) {
+          collection.insert({'a':1}, function(err, docs) {
+            collection.find({'_id':new ObjectID("aaaaaaaaaaaa")}, function(err, cursor) {
+              cursor.toArray(function(err, items) {
+                test.assertEquals(1, items.length);
+                p_client.close();
+              });
+            });
           });
         });
       });
     });
-  });
-});
 
 這是在網路上看到的一段操作mongodb的程式碼，為了循序操作，所以必須在一個callback裡面呼叫下一個動作要使用的函數，這個函數裡面還是會使用callback，最後就形成一個非常深的巢狀。
 
 這樣的程式碼，會比較難進行單元測試。有一個簡單的解決方式，是盡量不要使用匿名函數來當作callback或是event handler。透過這樣的方式，就可以對各個handler做單元測試了。例如：
 
-var http = require('http');
-var tools = {
- cookieParser: function(request, response) {
- if(request.headers['Cookie']) {
- //do parsing
- }
- }
-};
-var server = http.createServer(function(request, response) {
- this.emit('init', request, response);
- //...
-});
-server.on('init', tools.cookieParser);
-server.listen(8080, '127.0.0.1');
+.. code-block:: javascript
+
+    var http = require('http');
+    var tools = {
+      cookieParser: function(request, response) {
+        if(request.headers['Cookie']) {
+          //do parsing
+        }
+      }
+    };
+    var server = http.createServer(function(request, response) {
+      this.emit('init', request, response);
+      //...
+    });
+    server.on('init', tools.cookieParser);
+    server.listen(8080, '127.0.0.1');
 
 更進一步，可以把tools改成外部module，例如叫做tools.js：
 
-module.exports = {
- cookieParser: function(request, response) {
- if(request.headers['Cookie']) {
- //do parsing
- }
- }
-};
+.. code-block:: javascript
+
+    module.exports = {
+      cookieParser: function(request, response) {
+      if(request.headers['Cookie']) {
+        //do parsing
+      }
+    }
+    };
 
 然後把程式改成：
 
-var http = require('http');
+.. code-block:: javascript
 
-var server = http.createServer(function(request, response) {
- this.emit('init', request, response);
- //...
-});
-server.on('init', require('./tools').cookieParser);
-server.listen(8080, '127.0.0.1');
+    var http = require('http');
+    
+    var server = http.createServer(function(request, response) {
+      this.emit('init', request, response);
+      //...
+    });
+    server.on('init', require('./tools').cookieParser);
+    server.listen(8080, '127.0.0.1');
 
 這樣就可以單元測試cookieParser了。例如使用nodeunit時，可以這樣寫：
 
-var testCase = require('nodeunit').testCase;
-module.exports = testCase({
-    "setUp": function(cb) {
-     this.request = {
-     headers: {
-     Cookie: 'name1:val1; name2:val2'
-     }
-     };
-     this.response = {};
-     this.result = {name1:'val1',name2:'val2'};
+.. code-block:: javascript
+
+    var testCase = require('nodeunit').testCase;
+    module.exports = testCase({
+      "setUp": function(cb) {
+        this.request = {
+        headers: {
+          Cookie: 'name1:val1; name2:val2'
+        }
+      };
+      this.response = {};
+      this.result = {name1:'val1',name2:'val2'};
         cb();
-    },
-    "tearDown": function(cb) {
+      },
+      "tearDown": function(cb) {
         cb();
-    },
-    "normal_case": function(test) {
-     test.expect(1);
-     var obj = require('./tools').cookieParser(this.request, this.response);
-     test.deepEqual(obj, this.result);
-     test.done();
-    }
-});
+      },
+      "normal_case": function(test) {
+        test.expect(1);
+        var obj = require('./tools').cookieParser(this.request, this.response);
+        test.deepEqual(obj, this.result);
+        test.done();
+      }
+    });
 
 善於利用模組，可以讓程式更好維護與測試。
 
@@ -156,26 +166,28 @@ CPS（Continuation-Passing Style）
 
 cps是callback使用上的特例，形式上就是在函數最後呼叫callback，這樣就好像把函數執行後把結果交給callback繼續運行，所以稱作continuation-passing style。利用cps，可以在非同步執行的情況下，透過傳給callback的這個cps callback來獲知callback執行完畢，或是取得執行結果。例如：
 
-<html>
-<body>
-<div id="panel" style="visibility:hidden"></div>
-</body>
-</html>
-<script>
-var request = new XMLHttpRequest();
-request.open('GET', 'test749.txt?timestamp='+new Date().getTime(), true);
-request.addEventListener('readystatechange', function(next){
- return function() {
- if(this.readyState===4&&this.status===200) {
- next(this.responseText);//<==傳入的cps callback在動作完成時執行並取得結果進一步處理
- }
- };
-}(function(str){//<==這個匿名函數就是cps callback
- document.getElementById('panel').innerHTML=str;
- document.getElementById('panel').style.visibility = 'visible';
-}), false);
-request.send();
-</script>
+.. code-block:: html
+
+    <html>
+    <body>
+      <div id="panel" style="visibility:hidden"></div>
+    <script>
+      var request = new XMLHttpRequest();
+      request.open('GET', 'test749.txt?timestamp='+new Date().getTime(), true);
+      request.addEventListener('readystatechange', function(next){
+        return function() {
+          if(this.readyState===4&&this.status===200) {
+            next(this.responseText);//<==傳入的cps callback在動作完成時執行並取得結果進一步處理
+          }
+        };
+      }(function(str){//<==這個匿名函數就是cps callback
+        document.getElementById('panel').innerHTML=str;
+        document.getElementById('panel').style.visibility = 'visible';
+      }), false);
+      request.send();
+    </script>
+    </body>
+    </html>
 
 進一步的應用，也可以參考2-6 流程控制。
 
@@ -185,62 +197,70 @@ request.send();
 
 前面的cps範例裡面，使用了函數返回函數，這是為了把cps callback傳遞給onreadystatechange事件處理函數的方法。（因為這個事件處理函數並沒有設計好會傳送/接收這樣的參數）實際會執行的事件處理函數其實是內層返回的那個函數，之外包覆的這個函數，主要是為了利用Closure，把next傳給內層的事件處理函數。這個方法更常使用的地方，是為了解決一些scope問題。例如：
 
-<script>
-var accu=0,count=10;
-for(var i=0; i<count; i++) {
-  setTimeout(
-    function(){
-      count--;
-      accu+=i;
-      if(count<=0)
-        console.log(accu)
+.. code-block:: html
+
+    <script>
+    var accu=0,count=10;
+    for(var i=0; i<count; i++) {
+      setTimeout(
+        function(){
+          count--;
+          accu+=i;
+          if(count<=0)
+            console.log(accu)
+        }
+      , 50)
     }
-  , 50)
-}
-</script>
+    </script>
 
 最後得出的結果會是100，而不是想像中的45，這是因為等到setTimeout指定的函數執行時，變數i已經變成10而離開迴圈了。要解決這個問題，就需要透過Closure來保存變數i：
 
-<script>
-var accu=0,count=10;
-for(var i=0; i<count; i++) {
-  setTimeout(
-    function(i) {
-     return function(){
-     count--;
-       accu+=i;
-       if(count<=0)
-         console.log(accu)
-     };
-   }(i)
-  , 50)
-}
-//淺藍色底色的部份，是跟上面例子不一樣的地方
-</script>
+.. code-block:: html
+
+    <script>
+    var accu=0,count=10;
+    for(var i=0; i<count; i++) {
+      setTimeout(
+        function(i) {
+         return function(){
+         count--;
+           accu+=i;
+           if(count<=0)
+             console.log(accu)
+         };
+       }(i)
+      , 50)
+    }
+    //淺藍色底色的部份，是跟上面例子不一樣的地方
+    </script>
 
 函數返回函數的另外一個用途，是可以暫緩函數執行。例如：
 
-function add(m, n) {
-  return m+n;
-}
-var a = add(20, 10);
-console.log(a);
+.. code-block:: javascript
+
+    function add(m, n) {
+      return m+n;
+    }
+    var a = add(20, 10);
+    console.log(a);
 
 add這個函數，必須同時輸入兩個參數，才有辦法執行。如果我希望這個函數可以先給它一個參數，等一些處理過後再給一個參數，然後得到結果，就必須用函數返回函數的方式做修改：
 
-function add(m) {
-  return function(n) {
-    return m+n;
-  };
-}
-var wait_another_arg = add(20);//先給一個參數
-var a = function(arr) {
-  var ret=0;
-  for(var i=0;i<arr.length;i++) ret+=arr[i];
-  return ret;
-}([1,2,3,4]);//計算一下另一個參數
-var b = wait_another_arg(a);//然後再繼續執行
-console.log(b);
+.. code-block:: javascript
+    
+    function add(m) {
+      return function(n) {
+        return m+n;
+      };
+    }
+    var wait_another_arg = add(20);//先給一個參數
+    var a = function(arr) {
+      var ret=0;
+      for(var i=0;i<arr.length;i++) ret+=arr[i];
+      return ret;
+    }([1,2,3,4]);//計算一下另一個參數
+    var b = wait_another_arg(a);//然後再繼續執行
+    console.log(b);
 
 像這樣利用函數返回函數，使得原本接受多個參數的函數，可以一次接受一個參數，直到參數接收完成才執行得到結果的方式，有一個學名就叫做...Currying
 
@@ -267,149 +287,166 @@ console.log(b);
 
 下面的程式參考了mixu文章中的做法：
 
-var wait = function(callbacks, done) {
- console.log('wait start');
- var counter = callbacks.length;
- var results = [];
- var next = function(result) {//接收函數執行結果，並判斷是否結束執行
- results.push(result);
- if(--counter == 0) {
- done(results);//如果結束執行，就把所有執行結果傳給指定的callback處理
- }
- };
- for(var i = 0; i < callbacks.length; i++) {//依次呼叫所有要執行的函數
- callbacks[i](next);
- }
- console.log('wait end');
-}
+.. code-block:: javascript
 
-wait(
- [
- function(next){
- setTimeout(function(){
- console.log('done a');
- var result = 500;
- next(result)
- },500);
- },
- function(next){
- setTimeout(function(){
- console.log('done b');
- var result = 1000;
- next(result)
- },1000);
- },
- function(next){
- setTimeout(function(){
- console.log('done c');
- var result = 1500;
- next(1500)
- },1500);
- }
- ],
- function(results){
- var ret = 0, i=0;
- for(; i<results.length; i++) {
- ret += results[i];
- }
- console.log('done all. result: '+ret);
- }
-);
+    var wait = function (callbacks, done) {
+      console.log('wait start');
+      var counter = callbacks.length;
+      var results = [];
+      var next = function (result) { //接收函數執行結果，並判斷是否結束執行
+        results.push(result);
+        if (--counter == 0) {
+          done(results); //如果結束執行，就把所有執行結果傳給指定的callback處理
+        }
+      };
+      for (var i = 0; i < callbacks.length; i++) { //依次呼叫所有要執行的函數
+        callbacks[i](next);
+      }
+      console.log('wait end');
+    }
+    
+    wait(
+    [
+    
+    function (next) {
+      setTimeout(function () {
+        console.log('done a');
+        var result = 500;
+        next(result)
+      }, 500);
+    },
+    
+    function (next) {
+      setTimeout(function () {
+        console.log('done b');
+        var result = 1000;
+        next(result)
+      }, 1000);
+    },
+    
+    function (next) {
+      setTimeout(function () {
+        console.log('done c');
+        var result = 1500;
+        next(1500)
+      }, 1500);
+    }],
+    
+    function (results) {
+      var ret = 0,
+        i = 0;
+      for (; i < results.length; i++) {
+        ret += results[i];
+      }
+      console.log('done all. result: ' + ret);
+    });
 
 執行結果：
-wait start
-wait end
-done a
-done b
-done c
-done all. result: 3000
+
+.. code-block:: console
+  
+  wait start
+  wait end
+  done a
+  done b
+  done c
+  done all. result: 3000
 
 可以看出來，其實wait並不是真的等到所有函數執行完才結束執行，而是在所有傳給他的函數執行完畢後（不論同步、非同步），才執行處理結果的函數（也就是done()）
 
 不過這樣的寫法，還不夠實用，因為沒辦法實際讓函數可以等待執行完畢，又能當作事件處理函數來實際使用。上面參考到的Tim Caswell的文章，裡面有一種解法，不過還需要額外包裝（在他的例子中）NodeJS核心的fs物件，把一些函數（例如readFile）用Currying處理。類似像這樣：
 
-var fs = require('fs');
-var readFile = function(path) {
-    return function(callback, errback) {
-        fs.readFile(path, function(err, data) {
-            if(err) {
-                errback();
-            } else {
-                callback(data);
-            }
-        });
-    };
-}
+.. code-block:: javascript
+    
+    var fs = require('fs');
+    var readFile = function(path) {
+        return function(callback, errback) {
+            fs.readFile(path, function(err, data) {
+                if(err) {
+                    errback();
+                } else {
+                    callback(data);
+                }
+            });
+        };
+    }
 
 其他部份可以參考Tim Caswell的文章，他的Do.parallel跟上面的wait差不多意思，這裡只提示一下他沒說到的地方。
 
 另外一種做法是去修飾一下callback，當他作為事件處理函數執行後，再用cps的方式取得結果：
 
-<script>
-function Wait(fns, done) {
-    var count = 0;
-    var results = [];
-    this.getCallback = function(index) {
+.. code-block:: html
+
+    <script>
+    function Wait(fns, done) {
+      var count = 0;
+      var results = [];
+      this.getCallback = function (index) {
         count++;
-        return (function(waitback) {
-            return function() {
-                var i=0,args=[];
-                for(;i<arguments.length;i++) {
-                    args.push(arguments[i]);
-                }
-                args.push(waitback);
-                fns[index].apply(this, args);
-            };
-        })(function(result) {
-            results.push(result);
-            if(--count == 0) {
-                done(results);
+        return (function (waitback) {
+          return function () {
+            var i = 0,
+              args = [];
+            for (; i < arguments.length; i++) {
+              args.push(arguments[i]);
             }
+            args.push(waitback);
+            fns[index].apply(this, args);
+          };
+        })(function (result) {
+          results.push(result);
+          if (--count == 0) {
+            done(results);
+          }
         });
+      }
     }
-}
-var a = new Wait(
- [
- function(waitback){
- console.log('done a');
- var result = 500;
- waitback(result)
- },
- function(waitback){
- console.log('done b');
- var result = 1000;
- waitback(result)
- },
- function(waitback){
- console.log('done c');
- var result = 1500;
- waitback(result)
- }
- ],
- function(results){
- var ret = 0, i=0;
- for(; i<results.length; i++) {
- ret += results[i];
- }
- console.log('done all. result: '+ret);
- }
-);
-var callbacks = [a.getCallback(0),a.getCallback(1),a.getCallback(0),a.getCallback(2)];
-//一次取出要使用的callbacks，避免結果提早送出
-setTimeout(callbacks[0], 500);
-setTimeout(callbacks[1], 1000);
-setTimeout(callbacks[2], 1500);
-setTimeout(callbacks[3], 2000);
-//當所有取出的callbacks執行完畢，就呼叫done()來處理結果
-</script>
+    var a = new Wait(
+    [
+    
+    function (waitback) {
+      console.log('done a');
+      var result = 500;
+      waitback(result)
+    },
+    
+    function (waitback) {
+      console.log('done b');
+      var result = 1000;
+      waitback(result)
+    },
+    
+    function (waitback) {
+      console.log('done c');
+      var result = 1500;
+      waitback(result)
+    }],
+    
+    function (results) {
+      var ret = 0,
+        i = 0;
+      for (; i < results.length; i++) {
+        ret += results[i];
+      }
+      console.log('done all. result: ' + ret);
+    });
+    var callbacks = [a.getCallback(0), a.getCallback(1), a.getCallback(0), a.getCallback(2)];
+    //一次取出要使用的callbacks，避免結果提早送出
+    setTimeout(callbacks[0], 500);
+    setTimeout(callbacks[1], 1000);
+    setTimeout(callbacks[2], 1500);
+    setTimeout(callbacks[3], 2000);
+    //當所有取出的callbacks執行完畢，就呼叫done()來處理結果
+    </script>
 
 執行結果：
 
-done a
-done b
-done a
-done c
-done all. result: 3500
+.. code-block:: console
+    done a
+    done b
+    done a
+    done c
+    done all. result: 3500
 
 上面只是一些小實驗，更成熟的作品是Tim Caswell的step：https://github.com/creationix/step
 
@@ -423,111 +460,124 @@ done all. result: 3500
 
 循序執行可以協助把非常深的巢狀callback結構攤平，例如用這樣的簡單模組來做（serial.js）：
 
-module.exports = function(funs) {
-    var c = 0;
-    if(!isArrayOfFunctions(funs)) {
-        throw('Argument type was not matched. Should be array of functions.');
-    }
-    return function() {
+.. code-block:: javascript
+       
+    module.exports = function (funs) {
+      var c = 0;
+      if (!isArrayOfFunctions(funs)) {
+        throw ('Argument type was not matched. Should be array of functions.');
+      }
+      return function () {
         var args = Array.prototype.slice.call(arguments, 0);
-        if(!(c>=funs.length)) {
-            c++;
-            return funs[c-1].apply(this, args);
+        if (!(c >= funs.length)) {
+          c++;
+          return funs[c - 1].apply(this, args);
         }
-    };
-}
-
-function isArrayOfFunctions(f) {
-    if(typeof f !== 'object') return false;
-    if(!f.length) return false;
-    if(!f.concat) return false;
-    if(!f.splice) return false;
-    var i = 0;
-    for(; i<f.length; i++) {
-        if(typeof f[i] !== 'function') return false;
+      };
     }
-    return true;
-}
+   
+    function isArrayOfFunctions(f) {
+      if (typeof f !== 'object') return false;
+      if (!f.length) return false;
+      if (!f.concat) return false;
+      if (!f.splice) return false;
+      var i = 0;
+      for (; i < f.length; i++) {
+        if (typeof f[i] !== 'function') return false;
+      }
+      return true;
+    }
 
 簡單的測試範例（testSerial.js），使用fs模組，確定某個path是檔案，然後讀取印出檔案內容。這樣會用到兩層的callback，所以測試中有使用serial的版本與nested callbacks的版本做對照：
 
-var serial = require('./serial'),
-    fs = require('fs'),
-    path = './dclient.js',
-    cb = serial([
-    function(err, data) {
-        if(!err) {
-            if(data.isFile) {
-                fs.readFile(path, cb);
+.. code-block:: javascript
+    
+    var serial = require('./serial'),
+      fs = require('fs'),
+      path = './dclient.js',
+      cb = serial([
+    
+      function (err, data) {
+        if (!err) {
+          if (data.isFile) {
+            fs.readFile(path, cb);
+          }
+        } else {
+          console.log(err);
+        }
+      },
+    
+      function (err, data) {
+        if (!err) {
+          console.log('[flattened by searial:]');
+          console.log(data.toString('utf8'));
+        } else {
+          console.log(err);
+        }
+      }]);
+    fs.stat(path, cb);
+    
+    fs.stat(path, function (err, data) {
+      //第一層callback
+      if (!err) {
+        if (data.isFile) {
+          fs.readFile(path, function (err, data) {
+            //第二層callback
+            if (!err) {
+              console.log('[nested callbacks:]');
+              console.log(data.toString('utf8'));
+            } else {
+              console.log(err);
             }
+          });
         } else {
-            console.log(err);
+          console.log(err);
         }
-    },
-    function(err, data) {
-        if(!err) {
-            console.log('[flattened by searial:]');
-            console.log(data.toString('utf8'));
-        } else {
-            console.log(err);
-        }
-    }
-]);
-fs.stat(path, cb);
-
-fs.stat(path, function(err, data) {
-    //第一層callback
-    if(!err) {
-        if(data.isFile) {
-            fs.readFile(path, function(err, data) {
-                //第二層callback
-                if(!err) {
-                    console.log('[nested callbacks:]');
-                    console.log(data.toString('utf8'));
-                } else {
-                    console.log(err);
-                }
-            });
-        } else {
-            console.log(err);
-        }
-    }
-});
+      }
+    });
 
 關鍵在於，這些callback的執行是有順序性的，所以利用serial返回的一個函數cb來取代這些callback，然後在cb中控制每次會循序呼叫的函數，就可以把巢狀的callback攤平成循序的function陣列（就是傳給serial函數的參數）。
 
 測試中的./dclient.js是一個簡單的dnode測試程式，放在跟testSerial.js同一個目錄：
 
-var dnode = require('dnode');
+.. code-block:: javascript
 
-dnode.connect(8000, 'localhost',  function(remote) {
-    remote.restart(function(str) {
-        console.log(str);
-        process.exit();
+    var dnode = require('dnode');
+    
+    dnode.connect(8000, 'localhost',  function(remote) {
+        remote.restart(function(str) {
+            console.log(str);
+            process.exit();
+        });
     });
-});
 
 執行測試程式後，出現結果：
 
 [flattened by searial:]
-var dnode = require('dnode');
 
-dnode.connect(8000, 'localhost',  function(remote) {
-    remote.restart(function(str) {
-        console.log(str);
-        process.exit();
+.. code-block:: javascript
+    
+    var dnode = require('dnode');
+    
+    dnode.connect(8000, 'localhost',  function(remote) {
+        remote.restart(function(str) {
+            console.log(str);
+            process.exit();
+        });
     });
-});
 
 [nested callbacks:]
-var dnode = require('dnode');
 
-dnode.connect(8000, 'localhost',  function(remote) {
-    remote.restart(function(str) {
-        console.log(str);
-        process.exit();
+.. code-block:: javascript
+    
+    var dnode = require('dnode');
+    
+    dnode.connect(8000, 'localhost',  function(remote) {
+        remote.restart(function(str) {
+            console.log(str);
+            process.exit();
+        });
     });
-});
 
 對照起來看，兩種寫法的結果其實是一樣的，但是利用serial.js，巢狀的callback結構就會消失。
 
