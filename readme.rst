@@ -18,6 +18,17 @@ http://contpub.org/read/nodejs-wiki-book
 
 本書適合 Node.js 初學者至進階開發者，也歡迎您在學習時一起參與本書內容撰寫。
 
+根目錄結構
+=======
+
+ * index.rst -> 基礎設定檔案，讓 contpub.org 讀取設定
+ * contents.rst.inc -> 本書編排列表
+ * conver.tex -> 本書封面
+ * links.rst -> 外部連結
+ * readme.rst -> 本書說明
+ * zh-tw -> 內含各章節詳細資料，編排方式可參考 contents.rst.inc
+ * src -> 範例程式碼擺放位置
+
 授權
 ====
 
