@@ -1,11 +1,398 @@
-********************
-JavaScript 與 NodeJS
-********************
+**************************
+附錄 Node.js 與 JavaScript 
+**************************
 
-其實使用 JavaScript 在網頁端與伺服器端的差距並不大，
-但是為了使 NodeJS 可以發揮他最強大的能力，
-有一些知識還是必要的，
-所以還是針對這些主題介紹一下。
+
+
+JavaScript 基本型態
+==================
+
+JavaScript 有以下幾種基本型態。
+
+ * Boolean
+ * Number
+ * String
+ * null
+ * undefined
+ 
+變數宣告的方式，就是使用 var，結尾使用『;』，如果需要連續宣告變數，可以使用 『,』 做為連結符號。
+ 
+::
+
+    // 宣告 x 為 123, 數字型態
+    var x=123;
+    
+    // 宣告 a 為456, b 為 'abc' 字串型態
+    var a=456,
+        b='abc';
+
+布林值
+======
+
+布林，就只有兩種數值, true, false
+
+::
+
+    var a=true,
+        b=false;
+
+數字型別
+=======
+    
+Number 數字型別，可以分為整數，浮點數兩種，
+ 
+::
+
+    var a=123,
+        b=123.456;
+ 
+字串型別
+=======
+
+字串，可以是一個字，或者是一連串的字，可以使用 '' 或 "" 做為字串的值。
+
+::
+
+    var a="a",
+        a='abc';
+
+
+運算子
+=====
+
+基本介紹就是 +, -, *, / 邏輯運算就是 && (and), || (or), ^ (xor), 比較式就是 >, <, !=, !==, ==, ===, >=, <=        
+
+判斷式
+=====
+
+這邊突然離題，加入判斷式來插花，判斷就是 if，整個架構就是，
+
+::
+
+    if (判斷a) {
+        // 判斷a 成立的話，執行此區域指令
+    } else if (判斷b) {
+        // 判斷a 不成立，但是 判斷b 成立，執行此區域指令
+    } else {
+        // 其餘的事情在這邊處理
+    }
+
+整體架構就如上面描述，非 a 即 b的狀態，會掉進去任何一個區域裡面。整體的判斷能夠成立，只要判斷轉型成 Boolean 之後為 true，就會成立。大家可以這樣子測試，
+
+    Boolean(判斷);
+    
+應用
+====
+
+會突然講 if 判斷式，因為，前面有提到 Number, String 兩種型態，但是如果我們測試一下，新增一個 test.js
+
+::
+
+    var a=123,
+        b='123';
+        
+    if (a == b) {
+        console.log('ok');
+    }
+    
+編輯 test.js 完成之後，執行底下指令
+
+::
+
+    node test.js
+    // print: ok
+    
+輸出結果為 ok。
+
+這個結果是有點迥異， a 為 Number, b 為 String 型態，兩者相比較，應該是為 false 才對，到底發生什麼事情？ 這其中原因是，在判斷式中使用了 == ， JavaScript 編譯器，會自動去轉換變數型態，再進行比對，因此 a == b 就會成立，如果不希望轉型產生，就必須要使用 === 做為判斷。
+
+::
+    if (a === b) {
+        console.log('ok);
+    } else {
+        console.log('not ok');
+    }
+    // print: not ok
+
+轉型
+====
+
+如果今天需要將字串，轉換成 Number 的時候，可以使用 parseInt, parseFloat 的方法來進行轉換，
+
+::
+
+    var a='123';
+    console.log(typeof parseInt(a, 10));
+    
+使用 typeof 方法取得資料經過轉換後的結果，會取得，
+
+::
+
+    number
+    
+要注意的是，記得 parseInt 後面要加上進位符號，以免造成遺憾，在這邊使用的是 10 進位。
+
+Null & undefined 型態差異
+========================
+
+空無是一種很奇妙的狀態，在 JavaScript 裡面，null, undefined 是一種奇妙的東西。今天來探討什麼是 null ，什麼是 undefined.
+
+null
+====
+
+變數要經過宣告，賦予 null ，才會形成 null 型態。
+
+::
+
+    var a=null;
+    
+null 在 JavaScript 中表示一個空值。
+
+undefined
+==========
+
+從字面上就表示目前未定義，只要一個變數在初始的時候未給予任何值的時候，就會產生 undefined
+
+::
+
+    var a;
+    
+    console.log(a);
+    
+    // print : undefined
+    
+這個時候 a 就是屬於 undefined 的狀態。另外一種狀況就是當 Object 被刪除的時候。
+
+::
+
+    var a = {};    
+    delete a;
+    console.log(a);
+    
+    //print: undefined.
+    
+Object 在之後會介紹，先記住有這個東西。而使用 delete 的時候，就可以讓這個 Object 被刪除，就會得到結果為 undefined.
+
+兩者比較
+=======
+
+ null, undefined 在本質上差異並不大，不過實質上兩者並不同，如果硬是要比較，建議使用 === 來做為判斷標準，避免 null, undefined 這兩者被強制轉型。
+ 
+ ::
+
+    var a=null,
+        b;
+        
+    if (a === b) {
+        console.log('same');
+    } else {
+        console.log('different');
+    }
+
+    //print: different
+    
+從 typeof 也可以看到兩者本質上的差異，
+
+::
+
+    typeof null;
+    //print: 'object'
+    
+    typeof undefined;
+    //print: 'undefined'
+    
+null 本質上是屬於 object, 而 undefined 本質上屬於 undefined ，意味著在 undefined 的狀態下，都是屬於未定義。
+
+如果用判斷式來決定，會發現另外一種狀態
+
+::
+
+    Boolean(null);
+    // false
+    
+    Boolean(undefined);
+    // false
+    
+可以觀察到，如果一個變數值為 null, undefined 的狀態下，都是屬於 false。
+
+這樣說明應該幫助到大家了解，其實要判斷一個物件、屬性是否存在，只需要使用 if
+
+::
+
+    var a;
+    
+    if (!a) {
+        console.log('a is not existed');
+    }
+    
+    //print: a is not existed
+    
+a 為 undefined 由判斷式來決定，是屬於 False 的狀態。
+
+
+JavaScript Array
+=================
+
+陣列也是屬於 JavaScript 的原生物件之一，在實際開發會有許多時候需要使用 Array 的方法，先來介紹一下陣列要怎麼宣告。
+
+陣列宣告
+=======
+
+宣告方式，
+
+.. code-block:: js
+
+    var a=['a', 'b', 'c'];
+    
+    var a=new Array('a', 'b', 'c');
+
+以上這兩種方式都可以宣告成陣列，接著我們將 a 這個變數印出來看一下，
+
+.. code-block:: js
+
+    console.log(a);
+    //print: [0, 1, 2]
+
+Array 的排列指標從 0 開始，像上面的例子來說， a 的指標就有三個，0, 1, 2，如果要印出特定的某個陣列數值，使用方法，
+
+.. code-block:: js
+
+    console.log(a[1]);
+    //print: b
+    
+如果要判斷一個變數是不是 Array 最簡單的方式就是直接使用 Array 的原生方法，
+
+.. code-block:: js
+
+    var a=['a', 'b', 'c'];
+    
+    console.log(Array.isArray(a));
+    //print: true
+    
+    var b='a';
+    console.log(Array.isArray(b));
+    //print: false
+
+如果要取得陣列變數的長度可以直接使用，
+
+.. code-block:: js
+
+    console.log(a.length);
+    
+length 為一個常數，型態為 Number，會列出目前陣列的長度。
+
+pop, shift
+===========
+
+以前面所宣告的陣列為範例，
+
+.. code-block:: js
+
+    var a=['a', 'b', 'c'];
+    
+使用 pop 可以從最後面取出陣列的最後一個值。
+
+.. code-block:: js
+
+    console.log(a.pop());
+    //print: c
+    
+    console.log(a.length);
+    //print: 2
+
+同時也可以注意到，使用 pop 這個方法之後，陣列的長度內容也會被輸出。另外一個跟 pop 很像的方式就是 shift，
+
+.. code-block:: js
+
+    console.log(a.shift());
+    //print: a
+    
+    console.log(a.length);
+    //print: 1
+
+shift 跟 pop 最大的差異，就是從最前面將數值取出，同時也會讓呼叫的陣列少一個數組。
+
+slice
+======
+
+前面提到 pop, shift 就不得不說一下 slice，使用方式，
+
+.. code-block:: js
+
+    console.log(a.slice(1,3));
+    //print: 'b', 'c'
+    
+第一個參數為起始指標，第二個參數為結束指標，會將這個陣列進行切割，變成一個新的陣列型態。
+如果需要給予新的變數，就可以這樣子做，完整的範例。
+
+.. code-block:: js
+
+    var a=['a', 'b', 'c'];
+    
+    var b=a.slice(1,3);
+    
+    console.log(b);
+    //print: 'b', 'c'
+    
+concat
+=======
+
+concat 這個方法，可以將兩個 Array 組合起來，
+
+.. code-block:: js
+
+    var a=['a'];
+    
+    var b=['b', 'c'];
+    
+    console.log(a.concat(b));
+    //print: 'a', 'b', 'c'
+    
+concat 會將陣列組合，之後變成全新的數組，如果以例子來說，a 陣列希望變成 ['a', 'b', 'c']，可以重新將數值分配給 a，範例來說
+
+.. code-block:: js
+
+    a = a.concat(b);    
+
+Iterator
+=========
+
+陣列資料，必須要有 Iterator，將資料巡迴一次，通常是使用迴圈的方式，
+
+.. code-block:: js
+
+    var a=['a', 'b', 'c'];
+    
+    for(var i=0; i < a.length; i++) {
+        console.log(a[i]);
+    }
+
+    //print: a
+    //       b
+    //       c
+
+事實上可以用更簡單的方式進行，
+
+.. code-block:: js
+
+    var a=['a', 'b', 'c'];
+    
+    a.forEach(function (val, idx) {
+        console.log(val, idx);
+    });
+    
+    /*
+    print:
+    a, 0
+    b, 1
+    c, 2
+    */
+
+在 Array 裡面可以使用 foreach 的方式進行 iterator， 裡面給予的 function (匿名函式)，第一個變數為 Array 的 Value, 第二個變數為 Array 的指標。
+
+
+其實使用 JavaScript 在網頁端與伺服器端的差距並不大，但是為了使 NodeJS 可以發揮他最強大的能力，有一些知識還是必要的，所以還是針對這些主題介紹一下。
+
 其中 Event Loop、Scope 以及 Callback 其實是比較需要了解的基本知識，
 cps、currying、flow control是更進階的技巧與應用。
 
