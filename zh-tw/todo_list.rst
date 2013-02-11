@@ -19,12 +19,9 @@ Live Demo <http://dreamerslab.com/blog/tw/write-a-todo-list-with-express-and-mon
 ====
 開發環境
 開始之前請確定你已經安裝了 node.js, Express 和 MongoDB, 如果沒有可以參考下列文章.
-* How to setup a node.js development environment on Mac OSX Lion
-  <http://dreamerslab.com/blog/tw/how-to-setup-a-node-js-development-environment-on-mac-osx-lion/>
-* How to setup a node.js development environment on Ubuntu 11.04
-  <http://dreamerslab.com/blog/tw/how-to-setup-a-node-js-development-environment-on-ubuntu-11-04/>
-* How to setup a node.js development environment on Windows
-  <http://dreamerslab.com/blog/tw/how-to-setup-a-node-js-development-environment-on-windows/>
+* `How to setup a node.js development environment on Mac OSX Lion <http://dreamerslab.com/blog/tw/how-to-setup-a-node-js-development-environment-on-mac-osx-lion/>`
+* `How to setup a node.js development environment on Ubuntu 11.04 <http://dreamerslab.com/blog/tw/how-to-setup-a-node-js-development-environment-on-ubuntu-11-04/>`
+* `How to setup a node.js development environment on Windows <http://dreamerslab.com/blog/tw/how-to-setup-a-node-js-development-environment-on-windows/>`
 
 
 node.js 套件
