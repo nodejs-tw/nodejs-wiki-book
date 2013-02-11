@@ -6,8 +6,8 @@ nodeJS Code Gen Party 10 - 為 ToDo List 增加第三方認證
 
 這次的實作以 everyauth 為主，增加基本的使用者帳號密碼驗證功能，再擴充到使用 Facebook 的 OAuth 認證。
 
-
 `程式碼<https://github.com/jacksctsai/authentication-todo-example>` ｜ `下載<https://github.com/jacksctsai/authentication-todo-example/downloads>`
+
 
 步驟
 ====
@@ -56,7 +56,6 @@ nodeJS Code Gen Party 10 - 為 ToDo List 增加第三方認證
             "everyauth" : "0.2.32"
         }
     }
-
 
 
 實作帳號密碼登入
