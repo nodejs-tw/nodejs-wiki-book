@@ -297,7 +297,7 @@ nodeJS Code Gen Party 10 - 為 ToDo List 增加第三方認證
 
 
 修改 routes/index.js 檔案
-::
+.. code-block:: js
     var mongoose = require( 'mongoose' );
     var Todo     = mongoose.model( 'Todo' );
     var utils    = require( 'connect' ).utils;
@@ -348,7 +348,7 @@ Facebook 不接受 localhost 的網域名稱，所以為了要測試，我們改
 ==================
 
 修改 db.js 檔案
-::
+.. code-block:: js
     // 由於 id 是 Facebook 產生的一個代碼，
     // 所以我們加一個欄位 name 當做使用者名稱
     
@@ -364,7 +364,7 @@ Facebook 不接受 localhost 的網域名稱，所以為了要測試，我們改
     });
 
 修改 auth.js 檔案，增加以下內容
-::
+.. code-block:: js
     everyauth.facebook
       .appId('AppId')
       .appSecret('App Secret')
