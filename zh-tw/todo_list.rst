@@ -532,7 +532,7 @@ Error handling
 ==============
 
 要處理錯誤我們需要新增 next 參數到每個 action 裡. 一旦錯誤發生遍將他傳給下一個 middleware 去處理.
-    routes/index.js
+routes/index.js
 ::
     ... function ( req, res, next ){
       // ...
