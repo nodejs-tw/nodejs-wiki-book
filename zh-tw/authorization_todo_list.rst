@@ -246,55 +246,55 @@ nodeJS Code Gen Party 10 - 為 ToDo List 增加第三方認證
 
 
 在 views 目錄下增加 signup.ejs 檔案
-
-<h1 id="page-title">Sign up</h1>
-
-<% if( typeof(errors) !== 'undefined' ) { %>
-<center>
-  <%= errors %>
-</center>
-<% } %>
-
-<div id="list">
-  <form action="/signup" method="post" accept-charset="utf-8">
-    <div class="item-new">
-      ID <input class="input" type="text" name="login" />
+::
+    <h1 id="page-title">Sign up</h1>
+    
+    <% if( typeof(errors) !== 'undefined' ) { %>
+    <center>
+      <%= errors %>
+    </center>
+    <% } %>
+    
+    <div id="list">
+      <form action="/signup" method="post" accept-charset="utf-8">
+        <div class="item-new">
+          ID <input class="input" type="text" name="login" />
+        </div>
+        <div class="item-new">
+          Password <input class="input" type="password" name="password" />
+        </div>
+        <div class="item-new">
+          <input type="submit" value="Submit" />
+        </div>
+      </form>
+    
     </div>
-    <div class="item-new">
-      Password <input class="input" type="password" name="password" />
-    </div>
-    <div class="item-new">
-      <input type="submit" value="Submit" />
-    </div>
-  </form>
-
-</div>
 
 
 在 views 目錄下增加 login.ejs 檔案
-
-<h1 id="page-title">Login</h1>
-
-<% if( typeof(errors) !== 'undefined' ) { %>
-<center>
-  <%= errors %>
-</center>
-<% } %>
-
-<div id="list">
-  <form action="/login" method="post" accept-charset="utf-8">
-    <div class="item-new">
-      ID <input class="input" type="text" name="login" />
+::
+    <h1 id="page-title">Login</h1>
+    
+    <% if( typeof(errors) !== 'undefined' ) { %>
+    <center>
+      <%= errors %>
+    </center>
+    <% } %>
+    
+    <div id="list">
+      <form action="/login" method="post" accept-charset="utf-8">
+        <div class="item-new">
+          ID <input class="input" type="text" name="login" />
+        </div>
+        <div class="item-new">
+          Password <input class="input" type="password" name="password" />
+        </div>
+        <div class="item-new">
+          <input type="submit" value="Login" />
+        </div>
+      </form>
+    
     </div>
-    <div class="item-new">
-      Password <input class="input" type="password" name="password" />
-    </div>
-    <div class="item-new">
-      <input type="submit" value="Login" />
-    </div>
-  </form>
-
-</div>
 
 
 修改 routes/index.js 檔案
