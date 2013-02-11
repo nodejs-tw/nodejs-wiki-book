@@ -442,6 +442,7 @@ app.js
     });
 
 * routes/index.js
+
 ::
     var mongoose = require( 'mongoose' );
     var Todo     = mongoose.model( 'Todo' );
@@ -528,4 +529,27 @@ app.js
     };
 
 
+Error handling
+==============
+
+要處理錯誤我們需要新增 next 參數到每個 action 裡. 一旦錯誤發生遍將他傳給下一個 middleware 去處理.
+* routes/index.js
+
+::
+    ... function ( req, res, next ){
+      // ...
+    };
+     
+    ...( function( err, todo, count ){
+      if( err ) return next( err );
+     
+      // ...
+    });
+
+Run application
+===============
+::
+    $ node app.js
+
+到此為止我們已經完成了大部分的功能了. 原始碼裡有多加了一點 css 讓他看起來更美觀. 趕快開啟你的 server 來玩玩看吧 :)
 
