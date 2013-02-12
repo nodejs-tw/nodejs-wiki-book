@@ -53,6 +53,7 @@ http://creativecommons.org/licenses/by-nc/3.0/legalcode
 
 * Caesar Chi (clonn)
 * Fillano Feng (fillano)
+* Kevin Shu (Kevin)
 * lyhcode http://about.me/lyhcode
 
 Node.js Taiwan 是一個自由開放的技術學習社群，我們歡迎您加入一起學習、研究及分享。
