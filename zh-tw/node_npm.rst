@@ -258,7 +258,7 @@ express 套件提供 ``express`` 這個指令，\
     npm install -g express
 
 使用 global 安裝模式，\
-需要注意執行權限的問題，\
+需要注意執行權限與搜尋路徑的問題，\
 若權限不足，可能會出現類似以下的錯誤訊息：
 
 ::
@@ -290,6 +290,32 @@ express 套件提供 ``express`` 這個指令，\
     ::
 
         CoffeeScript version 1.2.0
+
+若未將 Node.js 套件安裝路徑加入環境變數 NODE_PATH，在引入時會回報錯誤。
+
+.. topic:: 報錯範例
+
+    ::
+    
+        module.js:340
+            throw err;
+                  ^
+        Error: Cannot find module 'express'
+            at Function.Module._resolveFilename (module.js:338:15)
+            at Function.Module._load (module.js:280:25)
+            at Module.require (module.js:362:17)
+            at require (module.js:378:17)
+            at Object.<anonymous> (/home/clifflu/test/node.js/httpd/express.js:3:15)
+            at Module._compile (module.js:449:26)
+            at Object.Module._extensions..js (module.js:467:10)
+            at Module.load (module.js:356:32)
+            at Function.Module._load (module.js:312:12)
+            at Module.runMain (module.js:492:10)
+
+.. topic:: 使用 ubuntu PPA 安裝 Node.js 的設定範例
+
+    ::
+        echo 'NODE_PATH="/usr/lib/node_modules"' | sudo tee -a /etc/environment
 
 套件的更新及維護
 ==============
