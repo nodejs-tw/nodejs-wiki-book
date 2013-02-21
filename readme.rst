@@ -18,6 +18,15 @@ http://contpub.org/read/nodejs-wiki-book
 
 本書適合 Node.js 初學者至進階開發者，也歡迎您在學習時一起參與本書內容撰寫。
 
+編寫語法與規範
+============
+
+請參考連結，
+
+::
+	
+	http://sphinx-doc.org/rest.html
+
 根目錄結構
 =======
 
