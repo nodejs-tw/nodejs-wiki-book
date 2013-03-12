@@ -1,0 +1,78 @@
+*********************************************
+如何在 Ubuntu 11.04 上設定 node.js 的開發環境
+*********************************************
+
+=============================
+用 apt-get 安裝最新的 node.js
+=============================
+
+要在 Ubuntu 上建立一個 node.js 的開發環境有很多方法. 你可以直接下載原始碼自己編譯, 或者是用套件管理系統來幫你解決這些瑣碎的問題. 因為 node.js 還是一個很年輕的專案, 常常會有版本的更新. 手動安裝及更新實在是非常的累人. 若是使用 apt-get 來幫你處理這些問題可以讓你把時間花在寫程式而不是設定環境上面。
+如果你是使用 Mac 的話可以參考這篇文章：
+http://dreamerslab.com/blog/tw/how-to-setup-a-node-js-development-environment-on-mac-osx-lion
+
+另外也可以使用 nvm( node version management ) 來安裝node，會方便得多。
+他是一個像是 ruby rvm 的東西. 可以讓你切換 node 的版本以利在開發時切換版本. 還有 npm 在 node 0.6.3 之後已經直接包在 node 裡面不需另外安裝了，所以基本上後面安裝 npm 可以跳過不看.
+
+::
+    # install git
+    $ sudo apt-get install git
+    # clone repo
+    $ git clone git://github.com/creationix/nvm.git ~/.nvm
+    # enable on terminal open
+    $ echo ". ~/.nvm/nvm.sh" >> ~/.bashrc
+    # reopen your terminal and do the following
+    $ nvm install v0.6.6
+    # set default node
+    $ nvm alias default v0.6.6
+
+
+============
+安裝 mongodb
+============
+
+mongoDB 是我首選的 NoSQL 資料庫. 雖然他不是裡面最快的但卻是最好上手以及使用的一個. 尤其是對習慣關聯式資料庫的人來說更是如此. 但是千萬不要用設計關聯式資料庫資料結構的思維來設計你的 NoSQL 資料結構, 不然你的 node.js 程式跑起來還是快不到哪去的. 記得在安裝之後好好看一下他寫的非常詳盡的文件.
+
+::
+    # switch to super user
+    $ sudo su
+    # add 10gen GPG key
+    $ apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+    # add to source.list for using upstart to manage mongodb
+    $ echo "deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen" >> /etc/apt/sources.list
+    # install
+    $ apt-get update
+    $ apt-get install mongodb-10gen
+    $ exit
+
+
+============
+更新 node.js
+============
+
+一樣用上面的指令就可以安裝新版本的 node 並且可以在版本中切換..
+
+
+============
+更新 mongoDB
+============
+
+因為我們是用 apt 來安裝的, 更新 mongoDB 也是和更新其他套件一樣.
+
+::
+    $ sudo apt-get update
+    $ sudo apt-get upgrade
+
+
+=====================================
+在其他作業系統設定 node.js 的開發環境
+=====================================
+
+如果你想要在 Windows 或是 Mac OSX Lion 設定 node.js 的開發環境，請參考下面兩篇文章: 
+* `如何在 Windows 上設定 node.js 的開發環境 <http://dreamerslab.com/blog/how-to-setup-a-node-js-development-environment-on-windows/>`
+* `如何在 Mac OSX Lion 上設定 node.js 的開發環境 <http://dreamerslab.com/blog/how-to-setup-a-node-js-development-environment-on-mac-osx-lion/>`
+
+
+=============================
+開始寫你的第一個 node.js 程式
+=============================
+現在你已經設定好 node.js 的開發環境了. 跟著可以來看看如何使用 npm 以及一些基本的 javascript 和 node.js.
