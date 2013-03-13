@@ -43,3 +43,47 @@ Homebrew 是我在 Mac 上最喜歡的套件管理系統. 他就像是 Ubuntu �
     $ nvm install v0.6.6
     # set default node
     $ nvm alias default v0.6.6
+
+
+========
+安裝 npm
+========
+npm 是 node.js 最受歡迎的套件管理系統. 就像是 ruby 的 gem 以及 php 裡的 pear. 現在上面已經有幾千個現成套件了. 包括 ORM, router, 以及第三方 api 的 wrapper 等等. 所以當你在寫新功能之前先上 npm 找找是不是已經有現成的模組可用吧.
+::
+    $ curl http://npmjs.org/install.sh | sudo sh
+
+
+============
+安裝 mongodb
+============
+mongoDB 是我首選的 NoSQL 資料庫. 雖然他不是裡面最快的但卻是最好上手以及使用的一個. 尤其是對習慣關聯式資料庫的人來說更是如此. 但是千萬不要用設計關聯式資料庫資料結構的思維來設計你的 NoSQL 資料結構, 不然你的 node.js 程式跑起來還是快不到哪去的. 記得在安裝之後好好看一下他寫的非常詳盡的文件.
+::
+    $ brew install mongodb
+    # create db directory
+    $ mkdir /usr/local/db
+
+
+============
+更新 node.js
+============
+
+一樣用上面的指令就可以安裝新版本的 node 並且可以在版本中切換..
+
+
+============
+更新 mongoDB
+============
+
+用 Homebrew 來更新 mongoDB 非常的容易. 下面兩行指令就幫你搞定了.
+::
+    $ brew update
+    $ brew upgrade
+
+
+=====================================
+在其他作業系統設定 node.js 的開發環境
+=====================================
+如果你想要在 Windows 或是 Ubuntu 11.04 設定 node.js 的開發環境，請參考下面兩篇文章: 
+`如何在 Windows 上設定 node.js 的開發環境 <http://dreamerslab.com/blog/how-to-setup-a-node-js-development-environment-on-windows/>`
+`如何在 Ubuntu 11.04 上設定 node.js 的開發環境 <http://dreamerslab.com/blog/how-to-setup-a-node-js-development-environment-on-ubuntu-11-04/>`
+
