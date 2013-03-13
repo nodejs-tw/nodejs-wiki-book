@@ -84,6 +84,6 @@ mongoDB 是我首選的 NoSQL 資料庫. 雖然他不是裡面最快的但卻是
 在其他作業系統設定 node.js 的開發環境
 =====================================
 如果你想要在 Windows 或是 Ubuntu 11.04 設定 node.js 的開發環境，請參考下面兩篇文章: 
-`如何在 Windows 上設定 node.js 的開發環境 <http://dreamerslab.com/blog/how-to-setup-a-node-js-development-environment-on-windows/>`
-`如何在 Ubuntu 11.04 上設定 node.js 的開發環境 <http://dreamerslab.com/blog/how-to-setup-a-node-js-development-environment-on-ubuntu-11-04/>`
+    * `如何在 Windows 上設定 node.js 的開發環境 <http://dreamerslab.com/blog/how-to-setup-a-node-js-development-environment-on-windows/>`
+    * `如何在 Ubuntu 11.04 上設定 node.js 的開發環境 <http://dreamerslab.com/blog/how-to-setup-a-node-js-development-environment-on-ubuntu-11-04/>`
 
