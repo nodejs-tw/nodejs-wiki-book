@@ -24,6 +24,7 @@ BUT!
 如果你的後端伺服器不支援的話，那他就只是一個單純的 Polling 而已。為什麼？
 
 .. code-block:: js
+
     (function polling() {
         $.ajax({
             url: "http://server",
@@ -50,6 +51,7 @@ BUT!
 是！
 
 ::
+
     <?php
     
     /* 我在 php 睡了 10 秒，再吐資料給剛剛呼叫我的 ajax */
@@ -61,6 +63,7 @@ BUT!
 以上，都是單向的溝通，也是目前流行的方式。
 
 這裡有兩篇 Comet 文章可以看一下：
+
     * `Comet Programming: Using Ajax to Simulate Server Push<http://www.webreference.com/programming/javascript/rg28/index.html>`
     * `Comet Programming: the Hidden IFrame Technique<http://www.webreference.com/programming/javascript/rg30/index.html>`
 
@@ -71,22 +74,24 @@ Socket.IO
 他做了一件事情，就是把那些溝通的方式全部整合起來，無論前端還是後端，他都幫你打包好。所以，你只要會用就可以了，這樣是不是很佛心呢！
 
 ::
+
     $ npm install socket.io
 
 他所支援的傳輸方式有下列幾種，
 
-    *xhr-polling
-    *xhr-multipart
-    *htmlfile
-    *websocket
-    *flashsocket
-    *jsonp-polling
+    * xhr-polling
+    * xhr-multipart
+    * htmlfile
+    * websocket
+    * flashsocket
+    * jsonp-polling
 
 除了字面上有 socket 的之外，都是 Polling 與其變種方式，其中 xhr-multipart 也是，他只是把資料拆成好幾個部份來傳送而已。而其中 htmlfile 貌似是 IE 底下的東西，我在大神上面問資料的時候，看到了 ActiveXObject 這幾個字，我就不想理他了。
 
 簡單的後端應用方式，我們可以這樣寫（以下是官方範例)
 
 .. code-block:: js
+
     var io = require('socket.io').listen(8080);
     
     io.sockets.on('connection', function (socket) {
@@ -99,6 +104,7 @@ Socket.IO
 而前端是這個樣子，
 
 ::
+
     <script src="/socket.io/socket.io.js"></script>
     <script>
         var socket = io.connect('http://localhost:8080');
@@ -111,6 +117,7 @@ Socket.IO
 我們沒有特別去指定 Socket.IO 要用什麼方式來作傳遞，所以他會自己決定，透過目前你的瀏覽器能使用什麼方式，來傳遞我們所需要的資料。這麼說，我們也可以指定傳遞方式，
 
 .. code-block:: js
+
     var io = require('socket.io').listen(8080);
     
     io.configure('development', function() {
@@ -149,37 +156,38 @@ Socket.IO
 問題來了，如果綁在其他的連接埠，那麼前端的呼叫的位址就得加上埠號，否則你的動作是會失效的。怎麼解決呢？網路上有一個很玄妙的解法，利用改寫 Socket.IO 的 xhr-polling 對於 XHRPolling 與 XHRPolling 的處理方式，來讓前端不需要加上埠號就能動作，
 
 .. code-block:: js
+
     io.configure(function() {
-      io.set("transports", ["xhr-polling"]);
-      io.set("polling duration", 10);
-    
-      var path = require('path');
-      var HTTPPolling = require(path.join(
-        path.dirname(require.resolve('socket.io')),'lib', 'transports','http-polling')
-      );
-      var XHRPolling = require(path.join(
-        path.dirname(require.resolve('socket.io')),'lib','transports','xhr-polling')
-      );
-    
-      XHRPolling.prototype.doWrite = function(data) {
-        HTTPPolling.prototype.doWrite.call(this);
-    
-        var headers = {
-          'Content-Type': 'text/plain; charset=UTF-8',
-          'Content-Length': (data && Buffer.byteLength(data)) || 0
+        io.set("transports", ["xhr-polling"]);
+        io.set("polling duration", 10);
+        
+        var path = require('path');
+        var HTTPPolling = require(path.join(
+            path.dirname(require.resolve('socket.io')),'lib', 'transports','http-polling')
+        );
+        var XHRPolling = require(path.join(
+            path.dirname(require.resolve('socket.io')),'lib','transports','xhr-polling')
+        );
+        
+        XHRPolling.prototype.doWrite = function(data) {
+            HTTPPolling.prototype.doWrite.call(this);
+            
+            var headers = {
+                'Content-Type': 'text/plain; charset=UTF-8',
+                'Content-Length': (data && Buffer.byteLength(data)) || 0
+            };
+            
+            if (this.req.headers.origin) {
+                headers['Access-Control-Allow-Origin'] = '*';
+                if (this.req.headers.cookie) {
+                    headers['Access-Control-Allow-Credentials'] = 'true';
+                }
+            }
+            
+            this.response.writeHead(200, headers);
+            this.response.write(data);
+            this.log.debug(this.name + ' writing', data);
         };
-    
-        if (this.req.headers.origin) {
-          headers['Access-Control-Allow-Origin'] = '*';
-          if (this.req.headers.cookie) {
-            headers['Access-Control-Allow-Credentials'] = 'true';
-          }
-        }
-    
-        this.response.writeHead(200, headers);
-        this.response.write(data);
-        this.log.debug(this.name + ' writing', data);
-      };
     });
 
 有興趣的人，原文在此，請參閱：How to make Socket.IO work behind nginx (mostly)
