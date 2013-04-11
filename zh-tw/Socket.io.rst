@@ -64,8 +64,8 @@ BUT!
 
 這裡有兩篇 Comet 文章可以看一下：
 
-    * `Comet Programming: Using Ajax to Simulate Server Push<http://www.webreference.com/programming/javascript/rg28/index.html>`
-    * `Comet Programming: the Hidden IFrame Technique<http://www.webreference.com/programming/javascript/rg30/index.html>`
+* `Comet Programming: Using Ajax to Simulate Server Push<http://www.webreference.com/programming/javascript/rg28/index.html>`
+* `Comet Programming: the Hidden IFrame Technique<http://www.webreference.com/programming/javascript/rg30/index.html>`
 
 
 Socket.IO
@@ -79,12 +79,12 @@ Socket.IO
 
 他所支援的傳輸方式有下列幾種，
 
-    * xhr-polling
-    * xhr-multipart
-    * htmlfile
-    * websocket
-    * flashsocket
-    * jsonp-polling
+* xhr-polling
+* xhr-multipart
+* htmlfile
+* websocket
+* flashsocket
+* jsonp-polling
 
 除了字面上有 socket 的之外，都是 Polling 與其變種方式，其中 xhr-multipart 也是，他只是把資料拆成好幾個部份來傳送而已。而其中 htmlfile 貌似是 IE 底下的東西，我在大神上面問資料的時候，看到了 ActiveXObject 這幾個字，我就不想理他了。
 
