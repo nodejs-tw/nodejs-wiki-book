@@ -138,12 +138,12 @@ Socket.IO
 
 更多詳細設定，在官方的 wiki 當中有相當詳細的說明，
 
-`Configuring Socket.IO<https://github.com/LearnBoost/Socket.IO/wiki/Configuring-Socket.IO>`
+* `Configuring Socket.IO<https://github.com/LearnBoost/Socket.IO/wiki/Configuring-Socket.IO>`
 
 
 至於 Socket.IO 在握手（handshake）的處理的部份，在官方 wiki 也有說明，
 
-`Authorization and handshaking<ttps://github.com/LearnBoost/socket.io/wiki/Authorizing>`
+* `Authorization and handshaking<https://github.com/LearnBoost/socket.io/wiki/Authorizing>`
 
 為什麼要作上述的動作呢？顧名思義就是為了認證的一些流程而衍生出來的需求。我可以在這個過程中查詢 Session 的相關資料，也可以檢查 Cookie，IP Address 或是其他需要處理的資料等等。當然，處理 Cookie 與 Session 則最為常見。
 
