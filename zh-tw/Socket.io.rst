@@ -195,6 +195,7 @@ Socket.IO
 另外補上 Nginx 的相關設定，其實並不複雜，就依照一般的 Proxy 去設定即可，
 
 .. code-block:: js
+
     user www-data;
     worker_processes 4;
     worker_rlimit_nofile 1024;
