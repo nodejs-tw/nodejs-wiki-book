@@ -15,8 +15,39 @@ Javascript 物件導向設計
 但是javascript中(還)沒有Class，怎麼辦呢？
 這時我們就要自己動手寫一個了...
 
+
 javascript類別實作
 ==================
+
+::
+
+    var Person = function(name, age) {
+        this.name = name;
+        this.age = age;
+    };
+
+    var p1 = new Person('Kevin',18);
+
+一些新手可能沒見過"var p1 = new Person('Kevin',18);"這樣的物件宣告方式，
+他其實就相當於以下這四行程式碼：
+
+::
+
+    var p1 = {};
+    Person.call(p1, 'Kevin', 18);
+    p1.__proto__ = Person.prototype;
+    p1.constructer = Person;
+
+一般在建立物件時，最常見的方法是這樣：
+
+::
+
+    var obj = {};
+    console.log(obj.constructer); // Object(){}
+
+從上面這兩行程式碼可以得知，當我們在建立物件時，其實是由一個存在於global的Object函數來產生他的。
+了解到這點以後，你會發現
+
 
 
 實作private attributes
