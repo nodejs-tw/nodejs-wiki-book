@@ -196,13 +196,43 @@ prototype設計模式的漏洞
 但是在john突變之後，kevin的血雖然沒有變色，但是卻莫名其妙長出了翅膀。很明顯的，我們不小心改動到了Human的prototype。
 原來在我們為john的blood指定顏色時，javascript會為john這個物件增加一個屬於自己的"blood"屬性，這種情況就跟為物件增加屬性的方式一樣。於是在後來的呼叫時，會先找到john自己的blood屬性。
 但要john的body屬性執行push函式時，會發生在john中找不到body的狀況，於是就往上找到了Human.prototype的body屬性，並由他來執行push函式，此時改動到的便是Human.prototype.body了，也就連帶的影響到了無辜的kevin。
-\n\n
+
 
 類別的繼承(以"call"實作)
 ========================
 
+call是函數物件特有的方法，他的用途是在指定的作用域中執行這個函數。
+有些人對apply或許有印象，他們兩個基本上是一樣的東西，只是傳遞變數的方式不同，這邊我們不多做贅述。
+我們直接來看看要如何用它來實作javascript的繼承模式：
 
+.. code-block:: js
 
+    // 哺乳綱
+    function Mammals() {
+        this.blood = "warm";
+    }
+    
+    // 靈長目
+    function Primate() {
+        Mammals.call(this); // 記得放前面，不然會蓋掉重複的屬性
+        this.tail = true;
+        this.skin = "hairy";
+    }
+    Primate.prototype = new Mammals();
+    
+    // 人科
+    function Homo() {
+        Primate.call(this); // 記得放前面，不然會蓋掉重複的屬性
+        this.skin = "smooth";
+    }
+    
+    var human = new Homo();
+    human.name = "Kevin";
+    
+    alert(human.name); // "Kevin", from self
+    alert(human.skin); // "smooth", from Homo
+    alert(human.tail); // "true", from Primate
+    alert(human.blood); // "warm", from Mammals
 
 
 類別的靜態方法與屬性
