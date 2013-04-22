@@ -237,10 +237,34 @@ call是函數物件特有的方法，他的用途是在指定的作用域中執�
 
 實踐多繼承
 ==========
+上面提到了兩種繼承的實作模式，而第二種以call實作的方法可以很輕鬆的達到多繼承的設計，我們來看看以下的例子：
+
+.. code-block:: js
+
+    // 章魚
+    function Octopus() {
+        this.legs = 8;
+    }
+
+    // 小貓
+    function Pussy() {
+        this.speak = function () { console.log( "meow~" ); };
+    }
+
+    // 八爪貓
+    function Octopussy(name) {
+        Octopus.call(this);
+        Pussy.call(this);
+        this.name = name;
+    }
 
 
 實踐Mixin機制
 =============
+
+在很多情況下，多重繼承的複雜性是被人詬病的(有興趣可以看看Ruby發明者寫的"松本行弘的程式世界"，裡面有提到這部份)
+也因為這樣，多種物件導向語言都不支援多繼承，而是改以interface或mixin的概念來實現擴充性。
+這邊我們要來講講mixin。其實mixin就跟jQuery的extend概念一樣，接下來我們就來看一下要怎麼實現mixin設計：
 
 
 類別的靜態方法與屬性
