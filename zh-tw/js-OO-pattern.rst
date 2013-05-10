@@ -295,20 +295,62 @@ call是函數物件特有的方法，他的用途是在指定的作用域中執�
 .. code-block:: js
 
     function Human(name,sex) {
-        this.name = name||"No name";
+        this.name = name;
         this.sex = sex||"?";
     }
 
     Human.findByName = function (name) {
-        this.Human.people[name];
+        this.people[name];
     };
 
     Human.people = {};
 
+    Human.new = function(name, age){
+        var human = new Human(name,sex);
+        this.people[name]=human;
+    }
 
 
 實現多型
 ========
 
+在物件導向的繼承關係中，多型(polymorphism)是很常見的設計。
+多型可以讓繼承自同一父類別的類別擁有相同的函數，但是可以依不同的子類別去重新定義這個函數，例如說：
 
+哺乳類.getFoot(); // Error:"我沒有腳"
+猩猩.getFoot(); // "我有兩隻腳"
+狗狗.getFoot(); // "我有四隻腳"
+
+猩猩和狗狗都是繼承自哺乳類，但是呼叫同名的"getFoot"函數時卻有不同的實作，我們來看看要怎麼實作他：
+
+.. code-block:: js
+
+    // 哺乳綱
+    function Mammals() {
+        // constructor
+    }
+
+    Mammals.prototype.getFoot = function(){
+        throw new Error ("我沒有腳");
+    }
+
+    function Chimp() {
+        // constructor
+    }
+
+    Chimp.prototype = new Mammals();
+
+    Chimp.prototype.getFoot = function(){
+        console.log("我有兩隻腳");
+    }
+
+    function Dog() {
+        // constructor
+    }
+
+    Dog.prototype = new Mammals();
+
+    Dog.prototype.getFoot = function(){
+        console.log("我有四隻腳");
+    }
 
