@@ -264,11 +264,47 @@ call是函數物件特有的方法，他的用途是在指定的作用域中執�
 
 在很多情況下，多重繼承的複雜性是被人詬病的(有興趣可以看看Ruby發明者寫的"松本行弘的程式世界"，裡面有提到這部份)
 也因為這樣，多種物件導向語言都不支援多繼承，而是改以interface或mixin的概念來實現擴充性。
-這邊我們要來講講mixin。其實mixin就跟jQuery的extend概念一樣，接下來我們就來看一下要怎麼實現mixin設計：
+這邊我們要來講講mixin。其實mixin就跟jQuery的extend概念一樣:
+
+.. code-block:: js
+
+    var a = {height: 30, width: 20},
+        b = {long: 10};
+    $.extend(a,b);
+    console.log(a);//{height: 30, width: 20, long: 10}
+
+接下來我們就來看一下要怎麼實現mixin設計：
+
+.. code-block:: js
+
+    function mixin(a,b) {
+        for (key in b) {
+            a[key]=b[key];
+        }
+        return a;
+    }
 
 
 類別的靜態方法與屬性
 ====================
+
+在撰寫物件導向的語言時，常常會用到static的機制。
+在javascript物件導向設計中的class本身就一開始就以function的形式存在，其實就是static了。
+接下來我們要在這個class中增加屬於class本身的方法和屬性，即為static method、static attribute。
+
+.. code-block:: js
+
+    function Human(name,sex) {
+        this.name = name||"No name";
+        this.sex = sex||"?";
+    }
+
+    Human.findByName = function (name) {
+        this.Human.people[name];
+    };
+
+    Human.people = {};
+
 
 
 實現多型
