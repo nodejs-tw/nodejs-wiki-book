@@ -100,11 +100,11 @@ javascript類別實作
     console.log(p1.getAge());   // undefined
 
 因為function在參考變數時，只會一層一層往外找，
-所以上面這段程式碼中，getName及getAge是無法往Person這個建構函數中找age、name這兩個變數的，而以下三個情況都不成立：
+所以上面這段程式碼中，getName及getAge是無法往Person這個建構函數中找age、name這兩個變數的，因為以下三個情況都不成立：
 
-    1. getName及getAge所在的scope找不到age、name
-    2. getName及getAge所在的scope的外層中找不到age、name（在這個例子中他們已經在最外層了）
-    3. 找不到age、name這兩個全域變數
+1. getName及getAge所在的scope找不到age、name
+2. getName及getAge所在的scope的外層中找不到age、name（在這個例子中他們已經在最外層了）
+3. 找不到age、name這兩個全域變數
 
 
 
@@ -117,7 +117,13 @@ javascript是個很活的語言，在實作物件導向的「繼承」機制時�
 什麼是prototype？
 -----------------
 
-prototype是函數物件特有的屬性，當利用函數物件來建立一個物件(實例)時，會將prototype這個物件以reference的方式asign給實例的「__proto__」屬性(注意，是雙底線喔)。
+prototype是函數物件特有的屬性，當利用函數物件來建立一個物件(實例)時(var obj = new F())，實際上是做了以下的事情：
+
+1. 新增一個空物件 ( var obj={} )
+2. 將空物件的__proto__指向建構式的prototype ( obj.__proto__=F.prototype )
+3. 在新物件的scope中執行建構式  ( F.apply(obj,arguments) )
+
+在第二個步驟中，建構式的prototype這個物件以reference的方式asign給實例的「__proto__」屬性(注意，是雙底線喔)
 之後，__proto__中的所有屬性、方法，就如同這個實例原生擁有的一樣了，舉例來說：
 
 .. code-block:: js
@@ -130,6 +136,9 @@ prototype是函數物件特有的屬性，當利用函數物件來建立一個�
     console.log(p1); // Person {name: "Kevin", age: "18", nation: "Taiwan"}
 
 從上面的code中我們可以看到，雖然我們沒有為p1指定nation，但是因為p1的建構函數的prototype中有這個屬性，所以p1可以藉由__proto__來參考到他的值。
+
+    Note: __proto__並不是正規的物件屬性，只是一個指標，幫助我們了解原形鏈的運作原理，
+    在撰寫javascript程式的時候我們並不應該直接使用他。
 
 
 prototype chain
@@ -198,7 +207,8 @@ prototype設計模式的漏洞
 但要john的body屬性執行push函式時，會發生在john中找不到body的狀況，於是就往上找到了Human.prototype的body屬性，並由他來執行push函式，此時改動到的便是Human.prototype.body了，也就連帶的影響到了無辜的kevin。
 
 
-類別的繼承(以"call"實作)
+
+類別的繼承(借用建構式)
 ========================
 
 call是函數物件特有的方法，他的用途是在指定的作用域中執行這個函數。
@@ -233,6 +243,20 @@ call是函數物件特有的方法，他的用途是在指定的作用域中執�
     alert(human.skin); // "smooth", from Homo
     alert(human.tail); // "true", from Primate
     alert(human.blood); // "warm", from Mammals
+
+
+借用建構式的缺點
+----------------
+
+以借用建構式的方式來實作繼承，會發生一個問題，就是父類別的prototype沒有被繼承給子類別。
+這時我們可以用以下的方法來補足：
+
+    function Child() {
+        Parent.apply(this, arguments);
+    }
+    Child.prototype = new Parent();
+
+這樣的作法乍看之下很像是多此一舉，但和單純的prototype繼承比起來，這種方式在自身以及prototype中保留了來自父類別建構式的屬性，當自身的屬性被刪除時，prototype中的同名屬性也會"亮起"
 
 
 實踐多繼承
