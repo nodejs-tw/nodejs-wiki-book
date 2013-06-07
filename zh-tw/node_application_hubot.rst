@@ -79,7 +79,7 @@ plurk.coffee 程式碼，
 
 	class PlurkStreaming extends EventEmitter
 
-		consuctor: (options) ->
+		constructor: (options) ->
 
 		plurk: (callback) ->
 			#觀察河道
