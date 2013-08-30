@@ -68,7 +68,13 @@ nodeJS 在v0.6.0版本之後開始正式支援windows native，直接使用node.
 
 `下載node.js 安裝檔案 <http://nodejs.org/#download>`
 
-如此完成windows native node.exe 安裝，接著可以進入command line 執行測試。在command line 輸入"node"，會出現node.js 版本訊息畫面，表示安裝完成。
+如此完成windows native node.exe 安裝，接著可以進入command line 執行測試。在command line 輸指令如下
+
+.. code-block:: javascript
+
+    node -v
+
+接著出現node.js 版本訊息畫面，表示安裝完成。
 
 .. image:: ../images/zh-tw/node_install_cmd.jpg
    :scale: 100%
