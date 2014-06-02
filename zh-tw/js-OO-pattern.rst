@@ -329,7 +329,7 @@ call是函數物件特有的方法，他的用途是在指定的作用域中執�
 
     Human.people = {};
 
-    Human.new = function(name, age){
+    Human.new = function(name, sex){
         var human = new Human(name,sex);
         this.people[name]=human;
     }
