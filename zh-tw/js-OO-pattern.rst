@@ -193,18 +193,17 @@ prototype設計模式的漏洞
     var john = new Human(); 
     var kevin = new Human(); 
     
-    john.blood = "purple"; 
-    john.body.push("wing"); 
+    john.blood = "purple"; //john因為不明原因突變，血變成紫色的
+    john.body.push("wing"); //john因為不明原因突變，長出翅膀來了
     
     alert(kevin.blood); // "red" 
     alert(john.blood); // "purple" 
     alert(kevin.body.toString()); // "foot, hand, wing" 
     alert(kevin.body.toString()); // "foot, hand, wing"
 
-從上面的例子可以看到，john因為不明原因而突變以後，不只血變成紫色的，也長出翅膀來了！
-但是在john突變之後，kevin的血雖然沒有變色，但是卻莫名其妙長出了翅膀。很明顯的，我們不小心改動到了Human的prototype。
+從上面的例子可以看到，john因為不明原因而突變了。但是在john突變之後，kevin的血雖然沒有變色，但是卻莫名其妙長出了翅膀。很明顯的，我們不小心改動到了Human的prototype。  
 原來在我們為john的blood指定顏色時，javascript會為john這個物件增加一個屬於自己的"blood"屬性，這種情況就跟為物件增加屬性的方式一樣。於是在後來的呼叫時，會先找到john自己的blood屬性。
-但要john的body屬性執行push函式時，會發生在john中找不到body的狀況，於是就往上找到了Human.prototype的body屬性，並由他來執行push函式，此時改動到的便是Human.prototype.body了，也就連帶的影響到了無辜的kevin。
+但要john的body屬性執行push函式時，會發生在john中找不到body的狀況，於是就往上找到了Human.prototype的body屬性，並由他來執行push函式，此時改動到的便是Human.prototype.body了，也就連帶的影響到了kevin。
 
 
 
